@@ -1,1 +1,443 @@
+#Heart Disease class prediction 
+#If the packages are not available in R, run "install.packages('name of the package')
+#Employ packages: library('name of the package')
+
+#Employ & install required packages:
+library(rstanarm)
+library(brms)
+library(caret)
+library(dplyr)
+library(e1071)
+library(forcats)
+library(GGally)
+library(ggplot2)
+library(janitor)
+library(lubridate)
+library(pROC)
+library(purrr)
+library(readr)
+library(rstanarm)
+library(stringr)
+library(tibble)
+library(tidyr)
+library(tidyverse)
+library(xgboost)
+library(kernlab)
+library(kmed)
+
+#############################################################################################################################
+#...
+data(heart)
+H<-heart[,c(-1,-2,-4,-5,-6,-7,-9,-11)] #shall check why are we removing certain columns
+#Turn each element to numbers
+H$cp<-as.numeric(heart$cp)
+H$thalach<-as.numeric(heart$thalach)
+H$oldpeak<-as.numeric(heart$oldpeak)
+H$ca<-as.numeric(heart$ca)
+H$thal<-as.numeric(heart$thal)
+
+#Generate distribution for each column from collected database
+m <-colMeans(H[,-6], na.rm = TRUE)
+std <-diag(var(H[,-6]))
+
+#Load train-test data
+H1 <- read.csv(file.choose(), header=TRUE)#choose heart_train.csv
+H2 <- read.csv(file.choose(), header=TRUE)#choose heart_test.csv
+
+#Normalize data to Z-distribution for each database
+H1$cp<-(H1$cp-m[1])/std[1]
+H1$thalach<-(H1$thalach-m[2])/std[2]
+H1$oldpeak<-(H1$oldpeak-m[3])/std[3]
+H1$ca<-(H1$ca-m[4])/std[4]
+H1$thal<-(H1$thal-m[5])/std[5]
+
+H2$cp<-(H2$cp-m[1])/std[1]
+H2$thalach<-(H2$thalach-m[2])/std[2]
+H2$oldpeak<-(H2$oldpeak-m[3])/std[3]
+H2$ca<-(H2$ca-m[4])/std[4]
+H2$thal<-(H2$thal-m[5])/std[5]
+
+#Train-test data split
+X_train <- H1[,-6]
+X_test <-H2[,-6]
+Y_train <- H1$class
+Y_test <- H2$class
+train_data <-H1
+
+############################################################################################################################
+# Logistic regression 
+model <- glm(class ~ ., data = train_data, family = "binomial")
+folds <- cut(seq(1, nrow(train_data)), breaks = 10, labels = FALSE)
+thresholds <- seq(0.1, 0.9, by = 0.1)
+youden_scores1 <- numeric(length(thresholds))
+sens_spec <- matrix(0,length(thresholds),2)
+coef <- matrix(0,10,6)
+b_sd <- matrix(0,10,6)
+B <- matrix(0,10,4)
+
+#Start 10-folds cross validation to find optimal treshold
+for (i in 1:10) {
+  # Split train data into 10 folds
+  ttIndexes <- which(folds == i, arr.ind = TRUE)
+  cv_train <- train_data[-ttIndexes, ]
+  cv_test  <- X_train[ttIndexes, ]
+  cv_y <- Y_train[ttIndexes]
+  
+  #model training
+  cv_model <- glm(class ~ ., data = cv_train, family = "binomial")
+  
+  #Find the best threshold for fold i from the treshold array (0.1:0.1:0.9), 
+  #we are trying one by one and find the threshold with highest youden's J score
+  for (t in seq_along(thresholds)) {
+    th <- thresholds[t]
+    preds <- predict(cv_model, newdata = cv_test, type = "response")
+    pred_class <- ifelse(preds >= th, 1, 0)
+    actual_class <- cv_y
+    
+    # Sensitivity & Specificity 
+    cm <- table(factor(cv_y, levels=c(0,1)),factor(pred_class, levels=c(0,1)))
+    sens <- cm[2,2] / sum(cm[2,])
+    spec <- cm[1,1] / sum(cm[1,])
+
+    #Youden J Score Generation
+    sens_spec [t,]<- c(sens, spec)
+    youden_scores1[t] <- sens + spec - 1
+    
+  }
+
+  #best columns are (fold_i, chosen threshold, respective sensitivity & specificity)
+  best <- c(i,thresholds[which.max(youden_scores1)], sens_spec[which.max(youden_scores1),])
+
+  #We insert the best to the matrix B so that later we can find out the best threshold from another Youden J score analysis    below  
+  B[i,] <- best
+  coef[i,] <-cv_model$coefficients#will be used in Bayesian logit
+  b_sd[i,] <- sqrt(diag(vcov(cv_model)))
+}
+
+youden_scores <- B[,3]+B[,4]-1
+
+#The best threshold
+best_thresh <- B[which.max(youden_scores),2]
+
+cat("Best threshold from CV:", best_thresh, "\n")###record the value###
+bcoe <- coef[which.max(youden_scores),]#will be used in Bayesian logit
+bsd <- b_sd[which.max(youden_scores),]#will be used in Bayesian logit
+predictions <- predict(model, newdata = as.data.frame(X_test), type = "response")#testing
+binary_predictionslog <- ifelse(predictions >= best_thresh, 1, 0)#check the treshold of prediction to be qualified as 1
+resultlog <- data.frame(actual = Y_test, predicted = binary_predictionslog)
+accuracylog<-sum(resultlog$actual==resultlog$predicted)/length(resultlog$actual)
+print(accuracylog)
+
+#Confusion Matrix & ROC Curve + AUC Value
+cmlogit<-confusionMatrix(data = as.factor(binary_predictionslog), reference = as.factor(Y_test), positive = "1")#compare TP,TN,FP,FN,should have 4 blocks only
+sen_spe_log<-cmlogit$byClass[c(1,2)]#sensitivity(p(accept|actual =1)) & specitivity(p(exclude|actual =0))
+roc_objlog <- roc(Y_test, as.numeric(resultlog$predicted))#roc,auc
+AUC<-auc(roc_objlog)#roc,auc
+CI_auclog<-ci.auc(roc_objlog, method="bootstrap", boot.n=1000) 
+plot(1-roc_objlog$specificities,roc_objlog$sensitivities,type = "l",col="red",lty=1, xlab="1-specificity",ylab = "sensitivity", led=2, xlim=c(0,1), ylim=c(0,1),main = "ROC Curve")#roc,auc
+abline(a = 0, b = 1, lty = 2, col = "gray")
+text(0.6, 0.2, labels=paste0("AUC = ", round(AUC,3), " (95% CI: ", round(CI_auclog[1],3), "-", round(CI_auclog[3],3),")"))
+
+#############################################################################################################################
+# Bayesian Logit
+## set priors (from logit above)
+m_coe<-bcoe
+sd_coe<-bsd #or summary(model)$coefficients[, "Std. Error"]
+prior_int <- normal(m_coe[1], sd_coe[1])
+prior_b <- normal(m_coe[-1], sd_coe[-1])
+SEED=123
+
+## build the model
+folds <- cut(seq(1, nrow(train_data)), breaks = 10, labels = FALSE)
+thresholds <- seq(0.1, 0.9, by = 0.1)
+youden_scores1 <- numeric(length(thresholds))
+sens_spec <- matrix(0,length(thresholds),2)
+B <- matrix(0,10,4)
+
+for (i in 1:10) {
+  # Split folds
+  testIndexes <- which(folds == i, arr.ind = TRUE)
+  cv_train <- train_data[-testIndexes, ]
+  cv_test  <- X_train[testIndexes, ]
+  cv_y <- Y_train[testIndexes]
+  
+  #model training on priors
+  cv_model <- bmodel <- stan_glm(class ~., data = train_data, family = binomial(link = "logit"),prior = prior_b,               prior_intercept =  prior_int, QR=TRUE,seed = SEED, refresh=0)
+  
+  # Fit inside CV
+  for (t in seq_along(thresholds)) {
+    th <- thresholds[t]
+    preds <- predict(cv_model, newdata = cv_test, type = "response")
+    pred_class <- ifelse(preds >= th, 1, 0)
+    actual_class <- cv_y
+    
+    # Sensitivity & specificity
+    cm <- table(factor(cv_y, levels=c(0,1)),factor(pred_class, levels=c(0,1)))
+    sens <- cm[2,2] / sum(cm[2,])
+    spec <- cm[1,1] / sum(cm[1,])
+    
+    sens_spec [t,]<- c(sens, spec)
+    youden_scores1[t] <- sens + spec - 1
+    
+  }
+
+  #Record best Youden's J Score for each iteration in Matrix B
+  best <- c(i,thresholds[which.max(youden_scores1)], sens_spec[which.max(youden_scores1),])
+  B[i,] <- best
+}
+
+youden_scores <- B[,3]+B[,4]-1
+best_thresh <- B[which.max(youden_scores),2]
+cat("Best threshold from CV:", best_thresh, "\n")
+
+p_probs <- posterior_epred(bmodel, newdata = as.data.frame(X_test)) 
+
+#Set probability treshold
+p_mean <- apply(p_probs, 2, mean)
+
+#Classification
+p_class <- ifelse(p_mean >= best_thresh, 1, 0) 
+
+#Confusion Matrix & ROC Curve + AUC value
+cm <- confusionMatrix(factor(p_class, levels=c(0,1)),factor(Y_test,  levels=c(0,1)),positive = "1")
+roc_obj <- roc(Y_test, as.numeric(p_class))#roc,auc
+AUC<-auc(roc_obj)#roc,auc
+CI_blm<-ci(roc_obj)#confidence interval at 95%
+plot(1-roc_obj$specificities,roc_obj$sensitivities,type = "l",col="red",lty=1, xlab="1-specificity",ylab = "sensitivity", led=2, xlim=c(0,1), ylim=c(0,1),main = "ROC Curve")#roc,auc
+abline(a = 0, b = 1, lty = 2, col = "gray")
+text(0.6, 0.2, paste("AUC =", round(AUC, 3)), cex = 1.1, col = "blue")
+
+#############################################################################################################################
+# K-Nearest Neighbour (KNN) 
+tc <- trainControl(method = "cv", number = 10, classProbs = TRUE, savePredictions = "final")
+model1 <- train(class ~ ., data = train_data, method = "knn", trControl = tc, tuneLength = 10)  # tn<=17 (<=sqrt(n))
+                
+# --- Find optimal threshold on train data (using 10-Cross Validation predictions) ---
+thresholds <- seq(0.1, 0.9, by = 0.1)
+youden_scores1 <- numeric(length(thresholds))
+train_probs <- model1$pred
+sens_spec <- matrix(0,length(thresholds),2)
+coef <- matrix(0,10,6)
+B <- matrix(0,10,4)
+train_probs$Resample[train_probs$Resample=="Fold01"]=1
+train_probs$Resample[train_probs$Resample=="Fold02"]=2
+train_probs$Resample[train_probs$Resample=="Fold03"]=3
+train_probs$Resample[train_probs$Resample=="Fold04"]=4
+train_probs$Resample[train_probs$Resample=="Fold05"]=5
+train_probs$Resample[train_probs$Resample=="Fold06"]=6
+train_probs$Resample[train_probs$Resample=="Fold07"]=7
+train_probs$Resample[train_probs$Resample=="Fold08"]=8
+train_probs$Resample[train_probs$Resample=="Fold09"]=9
+train_probs$Resample[train_probs$Resample=="Fold10"]=10
+RAN <-c(1:10)
+
+for (fold in RAN ) {
+  fold_data <- subset(train_probs, Resample == fold)
+  
+   # Fit inside CV
+   for (t in seq_along(thresholds)) {
+    th <- thresholds[t]
+    preds <- fold_data$pred
+    pred_class <- ifelse(preds >= th, 1, 0)
+    actual_class <- Y_train[fold_data$rowIndex]
+    
+    # Sensitivity & specificity
+    cm <- table(factor(actual_class, levels=c(0,1)),factor(pred_class, levels=c(0,1)))
+    sens <- cm[2,2] / sum(cm[2,])
+    spec <- cm[1,1] / sum(cm[1,])
+    
+    sens_spec [t,]<- c(sens, spec)
+    youden_scores1[t] <- sens + spec - 1
+    
+  }
+  
+  best <- c(fold,thresholds[which.max(youden_scores1)], sens_spec[which.max(youden_scores1),])
+  B[fold,] <- best
+  
+}
+
+#Youden J Score
+youden = as.numeric(B[,3])+as.numeric(B[,4])-1
+
+#Select Best Threshold
+best_thresh <- thresholds[which.max(youden)]
+cat("Best threshold from 10-fold CV (kNN):", best_thresh, "\n")
+
+#Prediction
+predictionsknn<-predict(model1,X_test)
+
+#Classification
+binary_predictionsknn <- ifelse(predictionsknn >= best_thresh, 1, 0)
+
+#Accuracy
+accuracy<-sum(binary_predictionsknn==Y_test)/length(Y_test)
+print(accuracy)
+
+#Confusion Matrixm& ROC Curve + AUC Value
+cmknn <- confusionMatrix(data = as.factor(binary_predictionsknn), reference = as.factor(Y_test), positive = "1")#compare TP,TN,FP,FN,should have 4 blocks only
+print(cmknn)
+sen_spe_k<-cmknn$byClass[c(1,2)]#sensitivity & specitivity
+roc_obj <- roc(Y_test, as.numeric(binary_predictionsknn))#roc,auc
+AUC<-auc(roc_obj)
+plot(1-roc_obj$specificities,roc_obj$sensitivities,type = "l",col="red",lty=1, xlab="1-specificity",ylab = "sensitivity", led=2, xlim=c(0,1), ylim=c(0,1),main = "ROC Curve")#roc,auc
+abline(a = 0, b = 1, lty = 2, col = "gray")
+text(0.6, 0.2, paste("AUC =", round(AUC, 3)), cex = 1.1, col = "blue")
+
+#############################################################################################################################
+#Support Vector Machine (SVM) 
+#Set 10-fold cross validation for model application
+tc <- trainControl(method = "cv", number = 10, classProbs = TRUE, savePredictions = "final")
+model2 <- train(class ~ ., data = train_data, method = "svmRadial", trControl = tc, tuneLength = 10)
+
+# --- Find optimal threshold on train data (using CV predictions) ---
+thresholds <- seq(0.1, 0.9, by = 0.1)
+youden_scores1 <- numeric(length(thresholds))
+train_probs <- model2$pred
+sens_spec <- matrix(0,length(thresholds),2)
+coef <- matrix(0,10,6)
+B <- matrix(0,10,4)
+train_probs$Resample[train_probs$Resample=="Fold01"]=1
+train_probs$Resample[train_probs$Resample=="Fold02"]=2
+train_probs$Resample[train_probs$Resample=="Fold03"]=3
+train_probs$Resample[train_probs$Resample=="Fold04"]=4
+train_probs$Resample[train_probs$Resample=="Fold05"]=5
+train_probs$Resample[train_probs$Resample=="Fold06"]=6
+train_probs$Resample[train_probs$Resample=="Fold07"]=7
+train_probs$Resample[train_probs$Resample=="Fold08"]=8
+train_probs$Resample[train_probs$Resample=="Fold09"]=9
+train_probs$Resample[train_probs$Resample=="Fold10"]=10
+RAN <-c(1:10)
+
+for (fold in RAN ) {
+  fold_data <- subset(train_probs, Resample == fold)
+  
+  # Fit inside CV
+  for (t in seq_along(thresholds)) {
+    th <- thresholds[t]
+    preds <- fold_data$pred
+    pred_class <- ifelse(preds >= th, 1, 0)
+    actual_class <- Y_train[fold_data$rowIndex]
+    
+    # Sensitivity & specificity  
+    cm <- table(factor(actual_class, levels=c(0,1)),factor(pred_class, levels=c(0,1)))
+    sens <- cm[2,2] / sum(cm[2,])
+    spec <- cm[1,1] / sum(cm[1,])
+    
+    sens_spec [t,]<- c(sens, spec)
+    youden_scores1[t] <- sens + spec - 1
+    
+  }
+  
+  best <- c(fold,thresholds[which.max(youden_scores1)], sens_spec[which.max(youden_scores1),])
+  B[fold,] <- best
+  
+}
+#Generate Youden J Score & Extract the highest score obtained in each of the 10 folds
+youden = as.numeric(B[,3])+as.numeric(B[,4])-1
+best_thresh <- thresholds[which.max(youden)]
+cat("Best threshold from 10-fold CV (SVM):", best_thresh, "\n")
+
+#Prediction
+presvm<-predict(model2, X_test)
+
+#Classification
+prediction2 <- round(tibble(y = Y_test, y_hat = ifelse(presvm >= best_thresh, 1, 0)))
+
+#Accuracy
+accuracy<-sum(prediction2$y_hat==prediction2$y)/length(Y_test)
+print(accuracy)
+
+#Confusion Matrix & ROC Curve + AUC Value
+cmsvm<-confusionMatrix(data = as.factor(prediction2$y_hat), reference = as.factor(Y_test), positive = "1")#need to compare from 0-3
+print(cmsvm)
+sen_spe_svm<-cmsvm$byClass[c(1,2)]#sensitivity & specitivity
+AUC<-auc(roc_obj)#roc,auc
+CI_svm<-ci(roc_obj)#confidence interval at 95%
+print(CI_svm)
+roc_obj <- roc(Y_test, as.numeric(prediction2$y_hat))#roc,auc
+plot(1-roc_obj$specificities,roc_obj$sensitivities,type = "l",col="red",lty=1, xlab="1-specificity",ylab = "sensitivity", led=2, xlim=c(0,1), ylim=c(0,1),main = "ROC Curve")#roc,auc
+abline(a = 0, b = 1, lty = 2, col = "gray")
+text(0.6, 0.2, paste("AUC =", round(AUC, 3)), cex = 1.1, col = "blue")
+
+#############################################################################################################################
+#Extreme Gradient Boosting (XGB)
+#Set Train Control with 10-Folds of Cross Validation
+tc <- trainControl(method = "cv", number = 10, classProbs = TRUE, savePredictions = "final", verboseIter = TRUE)
+model3 <- train(class ~ ., data = train_data, method = "xgbTree", trControl = tc, tuneLength = 3,verbose = TRUE)
+
+# --- Find optimal threshold on train data (using CV predictions) ---
+thresholds <- seq(0.1, 0.9, by = 0.1)
+youden_scores1 <- numeric(length(thresholds))
+train_probs <- model3$pred
+sens_spec <- matrix(0,length(thresholds),2)
+coef <- matrix(0,10,6)
+B <- matrix(0,10,4)
+train_probs$Resample[train_probs$Resample=="Fold01"]=1
+train_probs$Resample[train_probs$Resample=="Fold02"]=2
+train_probs$Resample[train_probs$Resample=="Fold03"]=3
+train_probs$Resample[train_probs$Resample=="Fold04"]=4
+train_probs$Resample[train_probs$Resample=="Fold05"]=5
+train_probs$Resample[train_probs$Resample=="Fold06"]=6
+train_probs$Resample[train_probs$Resample=="Fold07"]=7
+train_probs$Resample[train_probs$Resample=="Fold08"]=8
+train_probs$Resample[train_probs$Resample=="Fold09"]=9
+train_probs$Resample[train_probs$Resample=="Fold10"]=10
+RAN <-c(1:10)
+
+for (fold in RAN ) {
+  fold_data <- subset(train_probs, Resample == fold)
+  
+  # Fit inside CV
+  for (t in seq_along(thresholds)) {
+    th <- thresholds[t]
+    preds <- fold_data$pred
+    pred_class <- ifelse(preds >= th, 1, 0)
+    actual_class <- Y_train[fold_data$rowIndex]
+    
+    # Sensitivity & specificity
+    cm <- table(factor(actual_class, levels=c(0,1)),factor(pred_class, levels=c(0,1)))
+    sens <- cm[2,2] / sum(cm[2,])
+    spec <- cm[1,1] / sum(cm[1,])
+    
+    sens_spec [t,]<- c(sens, spec)
+    youden_scores1[t] <- sens + spec - 1
+    
+  }
+  
+  best <- c(fold,thresholds[which.max(youden_scores1)], sens_spec[which.max(youden_scores1),])
+  B[fold,] <- best
+  
+}
+
+#Youden J Score
+youden = as.numeric(B[,3])+as.numeric(B[,4])-1
+
+#Select Best Youden J Score
+best_thresh <- thresholds[which.max(youden)]
+cat("Best threshold from 10-fold CV (SVM):", best_thresh, "\n")#0.3
+
+#Prediction
+predictionxgb<-predict(model2,X_test)
+
+#Classification
+binary_predictionxgb <- ifelse(predictionxgb >= best_thresh, 1, 0)
+
+#Accuracy
+accuracy <- sum(binary_predictionxgb == Y_test) / length(Y_test)
+print(accuracy)
+
+#Confusion Matrix & ROC Curve + AUC Value
+cmxgb<-confusionMatrix(factor(binary_predictionxgb, levels = c(0,1)), factor(Y_test, levels = c(0,1)) , positive ="1")
+print(cmxgb)
+sen_spe_xgb<-cmxgb$byClass[c(1,2)]#sensitivity & specitivity
+roc_obj <- roc(Y_test, as.numeric(binary_predictionxgb))#roc,auc
+AUC<-auc(roc_obj)#roc,auc=0.901
+CI_xgb<-ci(roc_obj)#confidence interval at 95%
+print(CI_xgb)
+plot(1-roc_obj$specificities,roc_obj$sensitivities,type = "l",col="red",lty=1, xlab="1-specificity",ylab = "sensitivity", led=2, xlim=c(0,1), ylim=c(0,1),main = "ROC Curve")#roc,auc
+abline(a = 0, b = 1, lty = 2, col = "gray")
+text(0.6, 0.2, paste("AUC =", round(AUC, 3)), cex = 1.1, col = "blue")
+
+
+
 
