@@ -2,8 +2,20 @@
 #Note: n layers mean n layers of hidden layers in a Neural Network (NN) architecture, not total layers.
 
 # Section 1: Import the previously saved processed data
-train = pd.read_csv("HEART_train.csv")
-test = pd.read_csv("HEART_test.csv")
+pip install pandas sqlalchemy
+import pandas as pd
+from sqlalchemy import create_engine
+
+# Establish the connection
+engine = create_engine('sqlite:///my_database.db')
+
+# Retrieve data into a DataFrame
+# Use a table name or a custom SQL query
+train = pd.read_sql('SELECT * FROM my_table', con=engine)
+test = pd.read_sql('SELECT * FROM my_table', con=engine)
+print(train.head())
+print(test.head())
+
 X_train = train.drop("class", axis=1) # replace target with your label name
 Y_train = train["class"]
 X_test = test.drop("class", axis=1)
@@ -15,8 +27,8 @@ ytest_tensor = torch.tensor(Y_test.values, dtype=torch.float32)
 
 # Section 2: Network Architecture
 # Input layer: 5 neurons
-# Hidden layer: 6 layers, typically 8~24 neurons/layer
-# Activation rule: (H): ReLU ; (Out): Sigmoid (because our outcome is binary, typically sigmoid is better)
+# Hidden layer: Maximum at 6 layers, typically 8~24 neurons/layer
+# Activation rule: (H)-ReLU ; (Out)-Sigmoid (because our outcome is binary, typically sigmoid is better)
 # Initializer: Xavier Initialization
 
 #NN architecture
@@ -66,9 +78,12 @@ loss_fn = nn.BCELoss() # binary cross entropy, because our outcome is binary
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 #Section 4: Model training & evaluating training performance
-#Treshold (the reference for the prediction model to decide if the output is 0 or 1) using Youden J score, which is good in telling #the best #performed epoch by finding highest Youden J score = specificity + sensitivity - 1. 
+#Treshold (the reference for the prediction model to decide if the output is 0 or 1) using Youden J score, which is good in telling 
+#the best #performed epoch by finding highest Youden J score = specificity + sensitivity - 1. 
 
-#This is because high accuracy and loss are not enough to tell how well the model perform, we also need to know how good is its #sensitivity and specificity (the ability to correctly predict one as diagnosed or healthy), higher Youden J score implies higher sum #of specificity & sensitivity. 
+#This is because high accuracy and loss are not enough to tell how well the model perform, we also need to know how good is its 
+#sensitivity and specificity (the ability to correctly predict one as diagnosed or healthy), higher Youden J score implies higher sum 
+#of specificity & sensitivity. 
 
 Y = torch.tensor(H['class'],dtype=torch.int) # turn class from data frame H to a te
 prob1 = Y.sum()/len(Y)#probability of diagnosed
