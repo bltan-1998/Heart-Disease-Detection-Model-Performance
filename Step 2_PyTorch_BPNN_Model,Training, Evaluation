@@ -7,12 +7,12 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 # Establish the connection
-engine = create_engine('sqlite:///my_database.db')
+engine = create_engine('mysql+pymysql://root:your_password@localhost:3306/my_database')
 
 # Retrieve data into a DataFrame
 # Use a table name or a custom SQL query
-train = pd.read_sql('SELECT * FROM my_table', con=engine)
-test = pd.read_sql('SELECT * FROM my_table', con=engine)
+train = pd.read_sql('Training Set', con=engine)
+test = pd.read_sql('Testing Set', con=engine)
 print(train.head())
 print(test.head())
 
