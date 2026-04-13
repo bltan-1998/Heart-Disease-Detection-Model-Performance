@@ -65,10 +65,8 @@ X_train1, X_test1, y_train, y_test = tts(X, Y, test_size=0.198, random_state=42)
 X_train, X_test = (X_train1 - Xm)/Xsd, (X_test1 - Xm)/Xsd
 
 #Save train-test dataset seperately for both R and Python (change to sql database)
-train = pd.concat([X_train1.reset_index(drop=True),
-y_train.reset_index(drop=True)], axis=1)
-train.to_csv("HEART_train.csv", index=False)
-# Save testing data
-test = pd.concat([X_test1.reset_index(drop=True),
-y_test.reset_index(drop=True)], axis=1)
-test.to_csv("HEART_test.csv", index=False)
+engine = create_engine('mysql+pymysql://username:password@host:port/database')#password: your MySQL password; port: your host
+df1=pd.concat([X_train,y_train], axis=1)
+df2=pd.concat([X_test,y_test], axis=1)
+df1.to_sql(Training_Set, con=engine, if_exists='replace', index=False)
+df2.to_sql(Testing_Set, con=engine, if_exists='replace', index=False)
