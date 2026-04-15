@@ -28,8 +28,8 @@ library(kmed)
 #############################################################################################################################
 #...
 #Load train-test data
-H1 <- read.csv(file.choose(), header=TRUE)#choose heart_train.csv
-H2 <- read.csv(file.choose(), header=TRUE)#choose heart_test.csv
+H1 <- read.csv(file.choose(), header=TRUE)#choose heart_train.csv which is retrieved from the SQL data registry "Training_Set"
+H2 <- read.csv(file.choose(), header=TRUE)#choose heart_test.csv which is retrieved from the  SQL data registry "Testing_Set"
 
 #Normalize data to Z-distribution for each database
 H1$cp<-(H1$cp-m[1])/std[1]
