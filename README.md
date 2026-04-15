@@ -19,6 +19,7 @@ Tan Bee Ling
 4) Training
 - No resampling method was performed due to well distributed diagnosed and control ratio.
 - Find the optimal threshold for prediction model prediction from the highest Youden’s J score:
+  
   a) over 10-fold cross-validation in the train data on the SVM, BLR, LR, XGB and KNN models from packages for R,
   b) over 1000 epochs for the 3 NN models developed with PyTorch.
 
