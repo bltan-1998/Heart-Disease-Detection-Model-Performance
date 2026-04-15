@@ -5,11 +5,12 @@ As precision medicine technology improves with development of AI, machine learni
 Tan Bee Ling
 
 # Methods: 
-1) Creating SQL data registry from the Heart Disease database [1] after data cleaning.
 
-[Features]
+Variables from the database
 <img width="1071" height="861" alt="image" src="https://github.com/user-attachments/assets/65123db4-ca1b-422b-98b4-4a539d76422f" />
 
+1) Creating SQL data registry from the Heart Disease database [1] after data cleaning.
+   
 2) Features selection:
 - Selecting top 5 variables most highly correlated to the feature “class” (represented by "num"), which records healthy
   individuals as 0, diagnosed individuals as 1.
@@ -27,7 +28,7 @@ Tan Bee Ling
   
   b) over 1000 epochs for the 3 NN models developed with PyTorch.
 
-[Machine Learning Models implemented on R and Python]
+Machine Learning Models implemented on R and Python
 <img width="1192" height="451" alt="image" src="https://github.com/user-attachments/assets/74e7ea13-4ad8-4ac6-95ae-47d00567546e" />
 
 5) Model Evaluation from test results 
