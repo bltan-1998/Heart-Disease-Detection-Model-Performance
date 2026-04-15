@@ -21,6 +21,7 @@ Tan Bee Ling
 - Find the optimal threshold for prediction model prediction from the highest Youden’s J score:
   
   a) over 10-fold cross-validation in the train data on the SVM, BLR, LR, XGB and KNN models from packages for R,
+  
   b) over 1000 epochs for the 3 NN models developed with PyTorch.
 
 [Machine Learning Models implemented on R and Python]
