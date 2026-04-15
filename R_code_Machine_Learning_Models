@@ -27,19 +27,6 @@ library(kmed)
 
 #############################################################################################################################
 #...
-data(heart)
-H<-heart[,c(-1,-2,-4,-5,-6,-7,-9,-11)] #shall check why are we removing certain columns
-#Turn each element to numbers
-H$cp<-as.numeric(heart$cp)
-H$thalach<-as.numeric(heart$thalach)
-H$oldpeak<-as.numeric(heart$oldpeak)
-H$ca<-as.numeric(heart$ca)
-H$thal<-as.numeric(heart$thal)
-
-#Generate distribution for each column from collected database
-m <-colMeans(H[,-6], na.rm = TRUE)
-std <-diag(var(H[,-6]))
-
 #Load train-test data
 H1 <- read.csv(file.choose(), header=TRUE)#choose heart_train.csv
 H2 <- read.csv(file.choose(), header=TRUE)#choose heart_test.csv
