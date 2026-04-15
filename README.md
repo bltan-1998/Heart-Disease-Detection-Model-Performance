@@ -6,10 +6,13 @@ Tan Bee Ling
 
 # Methods: 
 1) Creating SQL data registry from the Heart Disease database [1] after data cleaning.
-   
+
+[Features]
+<img width="1071" height="861" alt="image" src="https://github.com/user-attachments/assets/65123db4-ca1b-422b-98b4-4a539d76422f" />
+
 2) Features selection:
-- Selecting top 5 variables most highly correlated to the feature “class”, which records healthy individuals as 0, diagnosed
-  individuals as 1.
+- Selecting top 5 variables most highly correlated to the feature “class” (represented by "num"), which records healthy
+  individuals as 0, diagnosed individuals as 1.
 - Two correlation matrices using Pearson and Spearman correlation analysis.
 
 3) Data Normalization:
