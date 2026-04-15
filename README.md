@@ -1,10 +1,8 @@
 # Heart Disease Detection: Machine Learning Model Performance 
+As precision medicine technology improves with development of AI, machine learning and deep learning algorithms have been extensively developed to help identifying and classifying patient outcomes under clinical settings. This project was started with the purpose to investigate model performance of different machine learning models from different packages in classifying heart disease from the database (https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset). 
 
-# Purpose:
-As precision medicine technology improves with development of AI, more machine learning This project was started with the purpose to investigate model perrformance of different machine learning models in classifying heart disease from the database (https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset). 
-
-# Abstract:
-In this study, eight machine learning models were implemented and compared for their predictive performance in cardiovascular disease (CVD) diagnosis. The models included Support Vector Machine (SVM), Bayesian Logistic Regression (BLR), Logistic Regression (LR), K-Nearest Neighbors (KNN), and Extreme Gradient Boosting (XGB) implemented in R, as well as Neural Networks with 1, 3, and 6 hidden layers (NN1, NN3, NN6) implemented in PyTorch. The analysis was conducted on the UCI heart disease dataset (via the kmed package), with the top 5 correlated variables selected as predictors. Data were normalized to z-scores, split 80:20 into train and test sets, and model thresholds optimized using Youden’s J statistic. Model evaluation employed AUC-ROC, sensitivity, specificity, accuracy, precision, F1-score, and Cohen’s kappa. Across all models, predictive performance exceeded moderate levels (AUC > 0.80). The XGB model demonstrated superior performance (AUC = 0.888, accuracy = 89.8%, κ = 0.79, F1 = 0.87), outperforming BLR (AUC = 0.882), BPNN6 (AUC = 0.866), and SVM/KNN (AUC = 0.853). The SVM achieved the highest sensitivity (95.8%), while BLR yielded the highest specificity (97.1%) and precision (95%). Overall, XGB provided the most balanced and reliable predictive power.
+# Author:
+Tan Bee Ling
 
 # Methods: 
 1) Creating SQL data registry from the Heart Disease database [1] after data cleaning.
@@ -23,6 +21,9 @@ In this study, eight machine learning models were implemented and compared for t
 - Find the optimal threshold for prediction model prediction from the highest Youden’s J score:
   a) over 10-fold cross-validation in the train data on the SVM, BLR, LR, XGB and KNN models from packages for R,
   b) over 1000 epochs for the 3 NN models developed with PyTorch.
+
+[Machine Learning Models implemented on R and Python]
+- <img width="870" height="346" alt="image" src="https://github.com/user-attachments/assets/0aba18b1-3e4e-4679-ae32-d3412a9ad1d8" />
 
 5) Model Evaluation from test results 
 Prediction models’ performances were all assessed by area under the ROC (Receiver Operating Characteristic) curve (AUC-ROC), sensitivity, specificity, F1 Score, Youden’s J Statistics, prediction bias, precision, and accuracy.
