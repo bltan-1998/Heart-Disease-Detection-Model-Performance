@@ -10,18 +10,19 @@
 # * Split into training and testing set
 #############################################################################################################################################
 # Import data
-guide='C:/Users/Bee Ling/Desktop/heart.csv'
+#1) If data is imported from SQL
+engine = create_engine("mysql+pymysql://username:password@host:3306/database_name")
+H = pd.read_sql("Heart", engine)
+
+#2) If data is imported from .csv
+guide='C:/Users/user/Desktop/heart.csv'
 H = pd.read_csv(guide)
-print(H.head(6))#check data if column is available
+
+#check if data is correctlybikported
+print(H.head(6))
 
 #check column names
 H.columns
-
-# Convert true to 1, false to 0
-H['sex']=(H['sex'] !=0).astype(int)
-H['fbs']=(H['fbs'] !=0).astype(int)
-H['exang']=(H['exang'] !=0).astype(int)
-H['class']=(H['class'] !=0).astype(int)
 
 #Construct Correlation Matrix
 C0 = H.corr(method='pearson') # pearson correlation matrix
