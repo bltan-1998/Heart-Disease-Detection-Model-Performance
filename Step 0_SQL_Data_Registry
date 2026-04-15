@@ -5,7 +5,6 @@
 
 #
 SELECT * 
-FROM Heart 
-WHERE TRIM(COALESCE(your_column, '')) = '' 
-   OR your_column = 'NaN'
+DESCRIBE Heart;
+
 
