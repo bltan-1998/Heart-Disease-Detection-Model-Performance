@@ -1,2 +1,11 @@
 
-# Load the dataset from the database from (https://archive.ics.uci.edu/dataset/45/heart+disease)
+# Load the dataset from the database from (https://archive.ics.uci.edu/dataset/45/heart+disease) into MySQL
+
+#Set table name as "Heart"
+
+#
+SELECT * 
+FROM Heart 
+WHERE TRIM(COALESCE(your_column, '')) = '' 
+   OR your_column = 'NaN'
+
