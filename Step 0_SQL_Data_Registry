@@ -3,10 +3,22 @@
 
 #Set table name as "Heart"
 
-# Check redundancy 
+# Check & Remove redundancy 
+#1) Check data types
 SELECT * 
 DESCRIBE Heart;
 
-# 
+#2)Remove null if there is any
+SELECT *
+FROM Heart
+WHERE col1 IS NOT NULL AND NOT NAN AND TRIM(col1) <> ''
+  AND col2 IS NOT NULL AND NOT NAN AND TRIM(col2) <> ''
+  AND col3 IS NOT NULL AND NOT NAN AND TRIM(col3) <> '';
+
+# Convert categotical data to its boolean form
+SELECT CAST(sex, cp, fbs, restecg, slope, thal  AS INT) AS converted_column
+FROM Heart;
+
+
 
 
