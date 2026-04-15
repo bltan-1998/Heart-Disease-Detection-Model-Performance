@@ -3,8 +3,10 @@
 
 #Set table name as "Heart"
 
-#
+# Check redundancy 
 SELECT * 
 DESCRIBE Heart;
+
+# 
 
 
