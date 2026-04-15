@@ -15,9 +15,20 @@ DESCRIBE Heart;
 #2)Remove null if there is any
 SELECT *
 FROM Heart
-WHERE col1 IS NOT NULL AND NOT NAN AND TRIM(col1) <> ''
-  AND col2 IS NOT NULL AND NOT NAN AND TRIM(col2) <> ''
-  AND col3 IS NOT NULL AND NOT NAN AND TRIM(col3) <> '';
+WHERE age IS NOT NULL OR NOT NAN OR TRIM(col1) <> ''
+  AND sex IS NOT NULL OR NOT NAN OR TRIM(col2) <> ''
+  AND cp IS NOT NULL OR NOT NAN OR TRIM(col3) <> '';
+  AND trestbps IS NOT NULL OR NOT NAN OR TRIM(col2) <> ''
+  AND chol IS NOT NULL OR NOT NAN OR TRIM(col3) <> '';
+  AND fbs IS NOT NULL OR NOT NAN OR TRIM(col2) <> ''
+  AND restecg IS NOT NULL OR NOT NAN OR TRIM(col3) <> '';
+  AND thalach IS NOT NULL OR NOT NAN OR TRIM(col2) <> ''
+  AND exang IS NOT NULL OR NOT NAN OR TRIM(col3) <> '';
+  AND oldpeak IS NOT NULL OR NOT NAN OR TRIM(col3) <> '';
+  AND slope IS NOT NULL OR NOT NAN OR TRIM(col2) <> ''
+  AND ca IS NOT NULL OR NOT NAN OR TRIM(col3) <> '';
+  AND thal IS NOT NULL OR NOT NAN OR TRIM(col2) <> ''
+  AND num IS NOT NULL OR NOT NAN OR TRIM(col3) <> '';
 
 # Convert categotical data to its boolean form
 SELECT CAST(sex, cp, fbs, restecg, slope, thal  AS INT) AS converted_column
