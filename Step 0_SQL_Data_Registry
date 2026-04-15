@@ -3,6 +3,10 @@
 
 #Set table name as "Heart"
 
+# Check number of patients
+SELECT COUNT(*) 
+FROM Heart;
+
 # Check & Remove redundancy 
 #1) Check data types
 SELECT * 
@@ -18,6 +22,14 @@ WHERE col1 IS NOT NULL AND NOT NAN AND TRIM(col1) <> ''
 # Convert categotical data to its boolean form
 SELECT CAST(sex, cp, fbs, restecg, slope, thal  AS INT) AS converted_column
 FROM Heart;
+
+# Check number of patients
+SELECT COUNT(*) 
+FROM Heart;
+
+# change column name "num" to "class"
+ALTER TABLE Heart
+RENAME COLUMN num TO class;
 
 
 
