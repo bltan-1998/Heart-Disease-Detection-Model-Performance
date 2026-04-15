@@ -23,7 +23,7 @@ Tan Bee Ling
   b) over 1000 epochs for the 3 NN models developed with PyTorch.
 
 [Machine Learning Models implemented on R and Python]
-- <img width="870" height="346" alt="image" src="https://github.com/user-attachments/assets/0aba18b1-3e4e-4679-ae32-d3412a9ad1d8" />
+<img width="1192" height="451" alt="image" src="https://github.com/user-attachments/assets/74e7ea13-4ad8-4ac6-95ae-47d00567546e" />
 
 5) Model Evaluation from test results 
 Prediction models’ performances were all assessed by area under the ROC (Receiver Operating Characteristic) curve (AUC-ROC), sensitivity, specificity, F1 Score, Youden’s J Statistics, prediction bias, precision, and accuracy.
