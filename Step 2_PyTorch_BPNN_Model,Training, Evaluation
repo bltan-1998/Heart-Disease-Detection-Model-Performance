@@ -11,8 +11,8 @@ engine = create_engine('mysql+pymysql://root:your_password@localhost:3306/my_dat
 
 # Retrieve data into a DataFrame
 # Use a table name or a custom SQL query
-train = pd.read_sql('Training Set', con=engine)
-test = pd.read_sql('Testing Set', con=engine)
+train = pd.read_sql('Training_Set', con=engine)
+test = pd.read_sql('Testing_Set', con=engine)
 print(train.head())
 print(test.head())
 
