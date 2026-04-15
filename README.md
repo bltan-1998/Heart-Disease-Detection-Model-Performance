@@ -28,8 +28,8 @@ Tan Bee Ling
 
 # Methods: 
 
-Variables from the database
-
+Machine Learning Models implemented on R and Python
+<img width="1192" height="451" alt="image" src="https://github.com/user-attachments/assets/74e7ea13-4ad8-4ac6-95ae-47d00567546e" />
 
 1) Creating SQL data registry from the Heart Disease database [1] after data cleaning.
    
@@ -42,16 +42,12 @@ Variables from the database
 - Data were all normalised to z-score.
 - Train and test data were divided with the proportion of 4:1.
 
-4) Training
-- No resampling method was performed due to well distributed diagnosed and control ratio.
+4) Model Training
 - Find the optimal threshold for prediction model prediction from the highest Youden’s J score:
   
   a) over 10-fold cross-validation in the train data on the SVM, BLR, LR, XGB and KNN models from packages for R,
   
   b) over 1000 epochs for the 3 NN models developed with PyTorch.
-
-Machine Learning Models implemented on R and Python
-<img width="1192" height="451" alt="image" src="https://github.com/user-attachments/assets/74e7ea13-4ad8-4ac6-95ae-47d00567546e" />
 
 5) Model Evaluation from test results 
 Prediction models’ performances were all assessed by area under the ROC (Receiver Operating Characteristic) curve (AUC-ROC), sensitivity, specificity, F1 Score, Youden’s J Statistics, prediction bias, precision, and accuracy.
