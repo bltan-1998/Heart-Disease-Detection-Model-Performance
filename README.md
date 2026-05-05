@@ -1,8 +1,9 @@
 # Heart Disease Detection: Machine Learning Model Performance 
 As precision medicine technology improves with development of AI, machine learning and deep learning algorithms have been extensively developed to help identifying and classifying patient outcomes under clinical settings. This project was started with the purpose to investigate model performance of different machine learning models from different packages in classifying heart disease from the database (https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset). 
 
-# Author:
-Tan Bee Ling
+---
+
+**Author:** Tan Bee Ling
 
 # Glossary
 1) Age: Patients Age in years (Numeric)
