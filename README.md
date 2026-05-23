@@ -78,7 +78,13 @@ Among 297 patients, the mean age was 54.54+/-9.05 years, of whom 160 are control
 
 # 🛠️Discussions
 **Limitations**
+- Limited size of sample in this database to further train, validate and test the machine learning models
+- Limited number of variables available as predictors
+- Limited information on relationship between predictors and their link to the presence of heart disease
+
+  
 **Future Work**
+To address the above limitations, Bayesian network with causal relationship information between the predictors themselves and the predictors and heart disease will be crafted from the utility of Bayesian statistics and probability theory. Besides, further collaboration with medical institutions is necessary for larger size of database with more biomarkers and omics available.
 
 # 📮Conclusion: 
 This study highlights the potential of machine learning models to support clinicians in CVD diagnosis using routinely available patient data.  All eight models achieved strong discriminative performance (AUC > 0.80), confirming their capability in identifying positive and negative class, however some models (LR, SVM, BPNN3) tend to make slightly unrealistic predictions due to their prediction bias > 0.1. Among them, XGB consistently outperformed, offering robust predictive reliability without much bias toward either class. Conversely, BPNN3 showed reduced sensitivity and a marked specificity-sensitivity value gap, limiting its diagnostic reliability relative to other models. These findings suggest that ensemble-based approaches such as XGB may provide the most effective framework for developing decision-support systems in CVD diagnosis. However, limited data size may lead to overfitting, thus, model performance needs to be further evaluated with larger datasets.
