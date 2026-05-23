@@ -84,6 +84,7 @@ Among 297 patients, the mean age was 54.54+/-9.05 years, of whom 160 are control
 
   
 **Future Work**
+
 To address the above limitations, Bayesian network with causal relationship information between the predictors themselves and the predictors and heart disease will be crafted from the utility of Bayesian statistics and probability theory. Besides, further collaboration with medical institutions is necessary for larger size of database with more biomarkers and omics available.
 
 # 📮Conclusion: 
