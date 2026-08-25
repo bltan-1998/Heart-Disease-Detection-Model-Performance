@@ -39,6 +39,7 @@
 
 **🔍Exploratory Data Analysis**
 (Relationship)
+<img width="849" height="822" alt="image" src="https://github.com/user-attachments/assets/c041ea21-a1b6-4867-a986-f1a14569f82b" />
 
 # ⚙️Methodology: 
 
