@@ -38,9 +38,8 @@
 | num       | Binary     | Target variable (1 = Heart disease, 0 = Healthy) |
 
 **🔍Exploratory Data Analysis**
-
-<img width="469" height="538" alt="image" src="https://github.com/user-attachments/assets/5572056a-4017-4459-b3bb-98f59c279f4c" />
-<img width="469" height="538" alt="image" src="https://github.com/user-attachments/assets/3ff55e70-d6ae-4253-b84b-0fe157188af8" />
+<img width="419" height="480" alt="image" src="https://github.com/user-attachments/assets/ef252cf9-854d-42ee-a49d-a4507a050538" />
+<img width="419" height="475" alt="image" src="https://github.com/user-attachments/assets/a1a35d4b-d1a9-432c-9610-877f11c25aa7" />
 
 Table 1
 
