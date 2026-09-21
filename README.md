@@ -1,9 +1,10 @@
 # <span style="color:#e63939">Heart Disease Detection: Machine Learning Model Performance 
->Aims: As precision medicine technology improves with development of AI, machine learning and deep learning algorithms have been extensively developed to help identifying and classifying patient outcomes under clinical settings. This project was started with the purpose to investigate model performance of different machine learning models from different packages in classifying heart disease from the database (https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset).
+>**Aims**
+>As precision medicine technology improves with development of AI, machine learning and deep learning algorithms have been extensively developed to help identifying and classifying patient outcomes under clinical settings. This project was started with the purpose to investigate model performance of different machine learning models from different packages in classifying heart disease from the database (https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset).
 >
->Methods & Results:
+>**Methods & Results**
 >
->Conclusion: 
+>**Conclusion**
 
 **Author:** Tan Bee Ling
 
@@ -41,28 +42,33 @@
 | thal      | Categorical| Thalassemia status: 0 = Unknown/Null, 1 = Normal, 2 = Fixed defect, 3 = Reversible defect |
 | num       | Binary     | Target variable (1 = Heart disease, 0 = Healthy) |
 
-**🔍Exploratory Data Analysis**
 
+# ⚙️Methodology: 
+**Data Collection**
+The data was collected from the Heart Disease database [1]
+
+**Patient Population**
 <img width="419" height="480" alt="image" src="https://github.com/user-attachments/assets/ef252cf9-854d-42ee-a49d-a4507a050538" />
 <img width="419" height="475" alt="image" src="https://github.com/user-attachments/assets/a1a35d4b-d1a9-432c-9610-877f11c25aa7" />
 
-Table 1
+Table 1: Baseline characteristics of the patients diagnosed with and without heart disease
+
+**Statistical Analysis**
+**Selection of Heart Disease Predictors**
+Predictors were selected from top 5 variables most highly correlated to the feature “class” (represented by "num"), which records healthy individuals as 0, diagnosed individuals as 1.
 
 <img width="710" height="484" alt="corr" src="https://github.com/user-attachments/assets/eea6e15e-79f4-4f15-990d-e021913e8790" />
 
-Figure 1
+Figure 1: Correlation map of continuous variables is obtained from Spearman correlation test 
 
-# ⚙️Methodology: 
-
-Machine Learning Models implemented on R and Python
+**Prediction of Heart Disease & Outcomes**
+Based on previous experience and available literature, the following machine learning models were chosen to predict heart diasease outcome. 
 <img width="1192" height="451" alt="image" src="https://github.com/user-attachments/assets/74e7ea13-4ad8-4ac6-95ae-47d00567546e" />
 
-1) Creating SQL data registry from the Heart Disease database [1] after data cleaning.
-   
-2) Features selection:
-- Selecting top 5 variables most highly correlated to the feature “class” (represented by "num"), which records healthy
-  individuals as 0, diagnosed individuals as 1.
-- Two correlation matrices using Pearson and Spearman correlation analysis.
+All models were recomputed after hyper-parameter fine-tuning of all classification algorithms.
+
+The models were set up and implemented on R and Python as follows
+
 
 3) Data Normalization:
 - Data were all normalised to z-score.
@@ -77,6 +83,9 @@ Machine Learning Models implemented on R and Python
 
 5) Model Evaluation from test results 
 Prediction models’ performances were all assessed by area under the ROC (Receiver Operating Characteristic) curve (AUC-ROC), sensitivity, specificity, F1 Score, Youden’s J Statistics, prediction bias, precision, and accuracy.
+
+**Validation**
+
 
 # 📈Results: 
 Among 297 patients, the mean age was 54.54+/-9.05 years, of whom 160 are control while 137 are diagnosed. 5 most key features (ca, thal, oldpeak, thalach, cp) from a total of 13 variables were chosen to train the models. XGB(AUC=0.888) outperformed BLR (AUC=0.882), BPNN6 (AUC=0.866), SVM (AUC=0.853) and KNN (AUC=0.853), BPNN3 (AUC=0.833), LR (AUC=0.84) and BPNN1 (AUC=0.817). The XGB model showed the highest accuracy (89.83%) with highest Youden’s J Statistics (0.7762), the SVM model was the most sensitive one (95.83%), LR and BLR showed the highest specificity (0.9714), and BLR showed the highest precision (95%). XGB model performed the best in overall due to its high AUC-ROC, accuracy, Youden’s J Statistics (0.7762), F1-Score (0.8696), reasonably high specificity (83.33%) and low prediction bias (0.0339) which showed best reliability in prediction, best detection of disease while performing reasonably well in predicting control. 
