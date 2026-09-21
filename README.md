@@ -100,7 +100,7 @@ Among 297 patients, the mean age was 54.54+/-9.05 years, of whom 160 are control
 <img width="1098" height="462" alt="image" src="https://github.com/user-attachments/assets/78223592-9ae0-441b-b85a-6090f6c6dc03" />
 
 # 🛠️Discussions
-**Limitations**
+**Limitations** (The following should be amended to be stated as not known if it is enough instead of saying insufficient because we do not have enough proof to show its sufficiency. Therefore we can say that we will move on to check if they are sufficient. Besides, limitations should also include what we find problematic. There might have something which happens against our expectations, if we do not know any, we can also state something we have not really discovered. But one thing for sure is that we can check the model performance, and tell what might be the problems, or if some figures seem bad, then we can propose what are they, of course we should mention that our predictors choice is not so appropriate with correlation matrix as it imples correlation without telling us importance, where we need further classification using weightage approaches which then can tell us which are more important, inclusing bayesian statistics to provide some information of causal relationship.)
 - Limited size of sample in this database to further train, validate and test the machine learning models
 - Limited number of variables available as predictors
 - Limited information on relationship between predictors and their link to the presence of heart disease
