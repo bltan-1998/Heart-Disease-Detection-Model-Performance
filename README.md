@@ -1,5 +1,6 @@
 # <span style="color:#e63939">Heart Disease Detection: Machine Learning Model Performance 
 >**Aims**
+>
 >As precision medicine technology improves with development of AI, machine learning and deep learning algorithms have been extensively developed to help identifying and classifying patient outcomes under clinical settings. This project was started with the purpose to investigate model performance of different machine learning models from different packages in classifying heart disease from the database (https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset).
 >
 >**Methods & Results**
@@ -55,7 +56,9 @@ The data was collected from the Heart Disease database [1]
 Table 1: Baseline characteristics of the patients diagnosed with and without heart disease
 
 **Statistical Analysis**
+
 **Selection of Heart Disease Predictors**
+
 Predictors were selected from top 5 variables most highly correlated to the feature “class” (represented by "num"), which records healthy individuals as 0, diagnosed individuals as 1.
 
 <img width="710" height="484" alt="corr" src="https://github.com/user-attachments/assets/eea6e15e-79f4-4f15-990d-e021913e8790" />
@@ -63,6 +66,7 @@ Predictors were selected from top 5 variables most highly correlated to the feat
 Figure 1: Correlation map of continuous variables is obtained from Spearman correlation test 
 
 **Prediction of Heart Disease & Outcomes**
+
 Based on previous experience and available literature, the following machine learning models were chosen to predict heart diasease outcome. 
 <img width="1192" height="451" alt="image" src="https://github.com/user-attachments/assets/74e7ea13-4ad8-4ac6-95ae-47d00567546e" />
 
