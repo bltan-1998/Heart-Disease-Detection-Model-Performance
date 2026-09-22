@@ -111,30 +111,13 @@ Model parameters were optimized using the Adam optimizer with a learning rate of
 
 ### Chart 2. Classification Threshold Selection
 
-```mermaid
-flowchart TD
+Step 1: Generate probability predictionson the training set <br/>
+Step 2: Evaluate classification thresholds from 0.1 to 0.9 (increment = 0.1) <br/>
+Step 3: For each threshold, calculate sensitivity and specificity <br/>
+Step 4: Calculate Youden's J (J = Sensitivity + Specificity - 1) <br/>
+Step 5: Select the threshold with the highest Youden's J as the optimal threshold for that epoch <br/>
+Step 6: Record training loss, accuracy, sensitivity, specificity, and Youden's J <br/>
 
-    S1["Step 1<br/>Generate probability predictions<br/>on the training set"]
-
-    S2["Step 2<br/>Evaluate classification thresholds<br/>from 0.1 to 0.9<br/>(increment = 0.1)"]
-
-    S3["Step 3<br/>For each threshold, calculate<br/>Sensitivity and Specificity"]
-
-    S4["Step 4<br/>Calculate Youden's J<br/><br/>J = Sensitivity + Specificity - 1"]
-
-    S5["Step 5<br/>Select the threshold with<br/>the highest Youden's J<br/>as the optimal threshold for that epoch"]
-
-    S6["Step 6<br/>Record Training Loss,<br/>Accuracy, Sensitivity,<br/>Specificity, and Youden's J"]
-
-    S1 --> S2 --> S3 --> S4 --> S5 --> S6
-
-    style S1 fill:#EAF3FF,stroke:#2F6DB0,stroke-width:2px
-    style S2 fill:#EAF3FF,stroke:#2F6DB0,stroke-width:2px
-    style S3 fill:#EAF3FF,stroke:#2F6DB0,stroke-width:2px
-    style S4 fill:#EAF3FF,stroke:#2F6DB0,stroke-width:2px
-    style S5 fill:#EAF3FF,stroke:#2F6DB0,stroke-width:2px
-    style S6 fill:#EAF3FF,stroke:#2F6DB0,stroke-width:2px
-```
 **(3) Model Evaluation from Validation**
 Input set of validation set is employed to the trained model, and then compared with the actual output set of the corresponding input. Prediction models’ performances were all assessed by area under the ROC (Receiver Operating Characteristic) curve (AUC-ROC), sensitivity, specificity, F1 Score, Youden’s J Statistics, prediction bias, precision, and accuracy on R version 4.3.1 (2023-06-16 ucrt)(https://cran.r-project.org/bin/windows/base/old/4.3.1/)with appropriate libraries (eg. for statistical analyses, for data analysis) and Python version 3.11.9 (https://www.python.org/downloads/release/python-3119/) on Visual Studio Code version 1.103.1,1.103.2, 1.104.1,1.104.2  with appropriate libraries (i.e. ).
 
