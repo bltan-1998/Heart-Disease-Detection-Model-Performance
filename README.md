@@ -107,19 +107,13 @@ The BPNN models were built and implemented using PyTorch version 2.7 (https://py
 Model parameters were optimized using the Adam optimizer with a learning rate of 0.001. Binary Cross-Entropy Loss (BCELoss) was used as the objective function because the prediction task involved a binary outcome. In each BPNN, model training was performed for 1000 epochs using mini-batch gradient descent with a batch size of 10. In each epoch, a series of actions as described in chart 2 was done to compute Youden's J statistics. The epoch yielding the maximum Youden’s J statistic was considered the best-performing model configuration.
 
 Chart 2: 
-
 | 1. The model generated probability predictions on the training set. |
 | 2. Classification thresholds ranging from 0.1 to 0.9 (increment = 0.1) were evaluated. |
 | 3. For each threshold, sensitivity and specificity were calculated. |
 | 4. The Youden’s J statistic was computed: |
-|                                            |
 | J = Sensitivity + Specificity - 1 |
-|                                   |
 | 5. The threshold producing the highest Youden’s J value was selected as the optimal classification threshold for that epoch. |
 | 6. Training loss, classification accuracy, sensitivity, specificity, and Youden’s J statistic were recorded. |
-
-
-
 
 **(3) Model Evaluation from Validation**
 Input set of validation set is employed to the trained model, and then compared with the actual output set of the corresponding input. Prediction models’ performances were all assessed by area under the ROC (Receiver Operating Characteristic) curve (AUC-ROC), sensitivity, specificity, F1 Score, Youden’s J Statistics, prediction bias, precision, and accuracy on R version 4.3.1 (2023-06-16 ucrt)(https://cran.r-project.org/bin/windows/base/old/4.3.1/)with appropriate libraries (eg. for statistical analyses, for data analysis) and Python version 3.11.9 (https://www.python.org/downloads/release/python-3119/) on Visual Studio Code version 1.103.1,1.103.2, 1.104.1,1.104.2  with appropriate libraries (i.e. ).
