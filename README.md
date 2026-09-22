@@ -46,16 +46,23 @@
 
 # ⚙️Methodology: 
 **Data Collection**
+
 The data was collected from the Heart Disease database [1]
 
 **Patient Population**
 
+Based on [4], the patient population consisted of 303 consecutive patients referred for coronary angiography at the Cleveland Clinic between May 1981 and September 1984. The patients had a mean age of 54 years, and 206 (68.0%) were men. None had a history or electrocardiographic evidence of previous myocardial infarction, known valvular disease, or cardiomyopathic disease.
+
+All 303 patients underwent routine clinical evaluation, including medical history, physical examination, resting electrocardiography, serum cholesterol measurement, and fasting blood glucose measurement. In addition, following informed consent, patients underwent three noninvasive tests as part of the research protocol: exercise electrocardiography, thallium scintigraphy, and cardiac fluoroscopy. The study was designed to minimize work-up bias by recording historical information without knowledge of noninvasive or angiographic findings, while the noninvasive tests were analyzed without knowledge of the historical or angiographic results. Coronary angiograms were interpreted by a cardiologist who was blinded to the other test results.
+
 <img width="609" height="945" alt="6165712586532393285" src="https://github.com/user-attachments/assets/a6f019b0-027d-4a2d-905f-60ca3b7fce2c" />
 <img width="610" height="958" alt="6165712586532393286" src="https://github.com/user-attachments/assets/67364cbc-c88a-46d4-8e8a-bd94df79fed9" />
 
-Table 1: Baseline characteristics of the patients diagnosed with and without heart disease
+Table 1: Baseline characteristics of the patients diagnosed with and without heart disease used for heart disease prediction in this work
 
 **Statistical Analysis**
+
+As shown in baseline characteristics (Table 1), continuous variables are presented as means and standard deviations, whereas categorical variables are presented as percentages.
 
 **Selection of Heart Disease Predictors**
 
@@ -120,5 +127,6 @@ https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset
 1) Janosi, A., Steinbrunn, W., Pfisterer, M., & Detrano, R. (1989). Heart Disease [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C52P4X.
 2) Souza, Cezar & Barreto, Cephas & Macedo, Lhayana & Oliveira de Brito, Bruna Alice & Targino, Victor & Betcel, Emanuel & Gomes de Almeida, Fernando & Rodrigues, Arthur & Malaquias, Ramon & Barroca Filho, Itamir. (2023). A systematic literature review on Machine Learning Model evaluation on healthcare applications. Research Society and Development. 12. e5412642042. 10.33448/rsd-v12i6.42042.
 3) Aggarwal, Charu. (2018). Neural Networks and Deep Learning: A Textbook. 10.1007/978-3-319-94463-0.
+4) Detrano R, Janosi A, Steinbrunn W, Pfisterer M, Schmid JJ, Sandhu S, Guppy KH, Lee S, Froelicher V. International application of a new probability algorithm for the diagnosis of coronary artery disease. Am J Cardiol. 1989 Aug 1;64(5):304-10. doi: 10.1016/0002-9149(89)90524-9. PMID: 2756873.
 
 
