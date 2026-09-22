@@ -45,22 +45,34 @@
 
 
 # ⚙️Methodology: 
-**Data Collection**
 
-The data was collected from the Heart Disease database [1]
+**Data Collection & Data Registry Creation** 
+
+Based on [1], the data collection protocol included routine clinical assessment and three noninvasive cardiovascular investigations. Clinical information comprised medical history, physical examination, resting electrocardiography, serum cholesterol, and fasting blood glucose measurements. Following informed consent, patients underwent exercise electrocardiography, exercise thallium scintigraphy, and cardiac fluoroscopy to assess coronary calcium.
+
+For model development, 13 clinical and test variables were considered. These comprised four clinical variables: age, sex, chest pain type, and systolic blood pressure. Additional routine clinical and laboratory variables included serum cholesterol, fasting blood glucose >120 mg/dL, and resting ECG findings. Exercise and noninvasive test variables included maximum heart rate, exercise-induced angina, ST-segment slope, ST-segment depression, exercise thallium scintigraphy findings, and the number of major coronary vessels showing calcium on fluoroscopy.
+
+To minimize potential work-up bias, information from different stages of the assessment was collected and interpreted independently [1]. Historical information was recorded without knowledge of the noninvasive test or angiographic results, while the noninvasive tests were analyzed without knowledge of the patient's history or angiographic findings [1]. Coronary angiograms were interpreted by a cardiologist who was blinded to the other test results [1].
+
+The collected variables were subsequently entered into a computerized database, which was then cleaned. Coronary artery disease status was determined from coronary angiography, with an angiogram classified as abnormal when there was greater than 50% diameter narrowing of a major coronary vessel. This angiographic disease status was used as the dependent outcome variable for development of the prediction model in this work.
+
+sorted and saved as an SQL based data registry
+
 
 **Patient Population**
 
 Based on [4], the patient population consisted of 303 consecutive patients referred for coronary angiography at the Cleveland Clinic between May 1981 and September 1984. The patients had a mean age of 54 years, and 206 (68.0%) were men. None had a history or electrocardiographic evidence of previous myocardial infarction, known valvular disease, or cardiomyopathic disease.
 
-All 303 patients underwent routine clinical evaluation, including medical history, physical examination, resting electrocardiography, serum cholesterol measurement, and fasting blood glucose measurement. In addition, following informed consent, patients underwent three noninvasive tests as part of the research protocol: exercise electrocardiography, thallium scintigraphy, and cardiac fluoroscopy. The study was designed to minimize work-up bias by recording historical information without knowledge of noninvasive or angiographic findings, while the noninvasive tests were analyzed without knowledge of the historical or angiographic results. Coronary angiograms were interpreted by a cardiologist who was blinded to the other test results.
+All 303 patients underwent routine clinical evaluation, including medical history, physical examination, resting electrocardiography, serum cholesterol measurement, and fasting blood glucose measurement. In addition, following informed consent, patients underwent three noninvasive tests as part of the research protocol: exercise electrocardiography, thallium scintigraphy, and cardiac fluoroscopy. The study was designed to minimize work-up bias by recording historical information without knowledge of noninvasive or angiographic findings, while the noninvasive tests were analyzed without knowledge of the historical or angiographic results. Coronary angiograms were interpreted by a cardiologist who was blinded to the other test results. 
+
+However, 6 patients with incomplete information (ie. presence of uninformed values on variables) were removed during data cleaning. Therefore, Table 1 includes only 297 patients with complete information for heart disease prediction in this work.
 
 <img width="609" height="945" alt="6165712586532393285" src="https://github.com/user-attachments/assets/a6f019b0-027d-4a2d-905f-60ca3b7fce2c" />
 <img width="610" height="958" alt="6165712586532393286" src="https://github.com/user-attachments/assets/67364cbc-c88a-46d4-8e8a-bd94df79fed9" />
 
 Table 1: Baseline characteristics of the patients diagnosed with and without heart disease used for heart disease prediction in this work
 
-**Statistical Analysis**
+**Statistical & Data Analysis**
 
 As shown in baseline characteristics (Table 1), continuous variables are presented as means and standard deviations, whereas categorical variables are presented as percentages.
 
@@ -81,6 +93,7 @@ All models were recomputed after hyper-parameter fine-tuning of all classificati
 
 The models were set up and implemented on R and Python as follows
 
+**(1) Model Setup**
 
 3) Data Normalization:
 - Data were all normalised to z-score.
