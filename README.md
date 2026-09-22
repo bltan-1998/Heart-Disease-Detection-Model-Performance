@@ -98,6 +98,18 @@ Class convertion > Categorical
 
 The models were set up and implemented on R and Python as follows
 
+The predictive models used in this work were first set up in R () and Python () then .... 
+
+Chart 2. Classification Threshold Selection. 
+
+Step 1: Generate probability predictionson the training set <br/>
+Step 2: Evaluate classification thresholds from 0.1 to 0.9 (increment = 0.1) <br/>
+Step 3: For each threshold, calculate sensitivity and specificity <br/>
+Step 4: Calculate Youden's J (J = Sensitivity + Specificity - 1) <br/>
+Step 5: Select the threshold with the highest Youden's J as the optimal threshold for that epoch <br/>
+Step 6: Record training loss, accuracy, sensitivity, specificity, and Youden's J <br/>
+The models wet up are discussed below.
+
 **(1)Backward Propagation Neural Network (BPNN) Model Development**
 
 The BPNN models were built and implemented using PyTorch version 2.7 (https://pytorch.org/blog/pytorch-2-7/). Three network architectures were investigated, consisting of 1, 3, and 6 hidden layers (n), respectively. Figure 2 illustrates the network architecture used in this work.
@@ -109,14 +121,41 @@ Figure 2: BPNN Architecture
 
 Model parameters were optimized using the Adam optimizer with a learning rate of 0.001. Binary Cross-Entropy Loss (BCELoss) was used as the objective function because the prediction task involved a binary outcome. In each BPNN, model training was performed for 1000 epochs using mini-batch gradient descent with a batch size of 10. In each epoch, a series of actions as described in chart 2 was done to compute Youden's J statistics. The epoch yielding the maximum Youden’s J statistic was considered the best-performing model configuration.
 
-### Chart 2. Classification Threshold Selection
+**(2) Logistic Regression**
 
-Step 1: Generate probability predictionson the training set <br/>
-Step 2: Evaluate classification thresholds from 0.1 to 0.9 (increment = 0.1) <br/>
-Step 3: For each threshold, calculate sensitivity and specificity <br/>
-Step 4: Calculate Youden's J (J = Sensitivity + Specificity - 1) <br/>
-Step 5: Select the threshold with the highest Youden's J as the optimal threshold for that epoch <br/>
-Step 6: Record training loss, accuracy, sensitivity, specificity, and Youden's J <br/>
+A logistic regression model was developed using a generalized linear model (GLM) with a binomial distribution and logit link function. Prior to model training, the five predictor variables (cp, thalach, oldpeak, ca, and thal) were standardized using Z-score normalization.
+
+**(3) Bayesian Logistic Regression**
+
+A Bayesian logistic regression model was implemented using the Stan framework through the rstanarm package.
+
+Prior Specification
+
+Prior distributions were derived from the coefficients and standard errors obtained from the conventional logistic regression model.
+
+For each coefficient:
+
+\beta_i \sim Normal(\hat{\beta_i}, SE(\hat{\beta_i}))
+
+where \hat{\beta_i} and SE(\hat{\beta_i}) denote the coefficient estimate and standard error obtained from logistic regression.
+
+**(4) K-Nearest Neighbours**
+
+A K-Nearest Neighbours classifier was developed using the caret package. Model training employed 10-fold cross-validation with probability estimation enabled.
+
+The optimal number of neighbours (k) was automatically selected through hyperparameter tuning with a search range of up to 10 candidate values.
+
+**(5) Support Vector Machine**
+
+A Support Vector Machine classifier with a Radial Basis Function (RBF) kernel was implemented using the caret package.
+
+Model tuning was performed using 10-fold cross-validation, and candidate hyperparameter combinations were automatically explored through caret’s tuning procedure.
+
+**(6) Extreme Gradient Boosting (XGB)**
+
+An Extreme Gradient Boosting (XGBoost) classifier was implemented using the xgbTree algorithm within the caret framework.
+
+Hyperparameter tuning was performed using 10-fold cross-validation with three candidate tuning configurations evaluated automatically by caret.
 
 **(3) Model Evaluation from Validation**
 Input set of validation set is employed to the trained model, and then compared with the actual output set of the corresponding input. Prediction models’ performances were all assessed by area under the ROC (Receiver Operating Characteristic) curve (AUC-ROC), sensitivity, specificity, F1 Score, Youden’s J Statistics, prediction bias, precision, and accuracy on R version 4.3.1 (2023-06-16 ucrt)(https://cran.r-project.org/bin/windows/base/old/4.3.1/)with appropriate libraries (eg. for statistical analyses, for data analysis) and Python version 3.11.9 (https://www.python.org/downloads/release/python-3119/) on Visual Studio Code version 1.103.1,1.103.2, 1.104.1,1.104.2  with appropriate libraries (i.e. ).
