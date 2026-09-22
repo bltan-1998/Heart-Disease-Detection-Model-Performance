@@ -58,16 +58,14 @@ The collected variables were subsequently entered into a computerized database [
 
 Using the computerized database from [1], database was cleaned, sorted and saved as an SQL based data registry, which is represented in chart 1.
 
-(chart 1: Data cleaning: Remove unwanted data which means with missing info, left with 297 patients, then reorganize variables : categorical> cts var > num), save as database in SQL version (...)
+INSERT: (chart 1: Data cleaning: Remove unwanted data which means with missing info, left with 297 patients, then reorganize variables : categorical> cts var > num), save as database in SQL version (...)
 
 
 **Patient Population**
 
-Based on [4], the patient population consisted of 303 consecutive patients referred for coronary angiography at the Cleveland Clinic between May 1981 and September 1984. The patients had a mean age of 54 years, and 206 (68.0%) were men. None had a history or electrocardiographic evidence of previous myocardial infarction, known valvular disease, or cardiomyopathic disease.
+Based on [4], the patient population consisted of 303 consecutive patients referred for coronary angiography at the Cleveland Clinic between May 1981 and September 1984. All patients underwent routine clinical evaluation, including medical history, physical examination, resting electrocardiography, serum cholesterol measurement, and fasting blood glucose measurement. In addition, following informed consent, patients underwent three noninvasive tests as part of the research protocol: exercise electrocardiography, thallium scintigraphy, and cardiac fluoroscopy. The study was designed to minimize work-up bias by recording historical information without knowledge of noninvasive or angiographic findings, while the noninvasive tests were analyzed without knowledge of the historical or angiographic results. Coronary angiograms were interpreted by a cardiologist who was blinded to the other test results. 
 
-All 303 patients underwent routine clinical evaluation, including medical history, physical examination, resting electrocardiography, serum cholesterol measurement, and fasting blood glucose measurement. In addition, following informed consent, patients underwent three noninvasive tests as part of the research protocol: exercise electrocardiography, thallium scintigraphy, and cardiac fluoroscopy. The study was designed to minimize work-up bias by recording historical information without knowledge of noninvasive or angiographic findings, while the noninvasive tests were analyzed without knowledge of the historical or angiographic results. Coronary angiograms were interpreted by a cardiologist who was blinded to the other test results. 
-
-However, 6 patients with incomplete information (ie. presence of uninformed values on variables) were removed during data cleaning. Therefore, Table 1 includes only 297 patients with complete information for heart disease prediction in this work.
+While inspecting and cleaning the computerized database, 6 patients with incomplete information (ie. presence of uninformed values on variables) were removed. Therefore, Table 1 includes only 297 patients with complete information for heart disease prediction in this work. The patients had a mean age of 54 years old by taking its floor, 201 (68.0%) were men and 96 (32%) were female. 137 of them were diagnosed with heart disease. None had a history or electrocardiographic evidence of previous myocardial infarction, known valvular disease, or cardiomyopathic disease.
 
 <img width="609" height="945" alt="6165712586532393285" src="https://github.com/user-attachments/assets/a6f019b0-027d-4a2d-905f-60ca3b7fce2c" />
 <img width="610" height="958" alt="6165712586532393286" src="https://github.com/user-attachments/assets/67364cbc-c88a-46d4-8e8a-bd94df79fed9" />
