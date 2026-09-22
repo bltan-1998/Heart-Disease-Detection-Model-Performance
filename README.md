@@ -56,10 +56,7 @@ To minimize potential work-up bias, information from different stages of the ass
 
 The collected variables were subsequently entered into a computerized database [4]. Coronary artery disease status was determined from coronary angiography, with an angiogram classified as abnormal when there was greater than 50% diameter narrowing of a major coronary vessel [4]. This angiographic disease status, represented as "num", was used as the dependent outcome variable for development of the prediction model in this work [4].
 
-Using the computerized database from [1], database was cleaned, sorted and saved as an SQL based data registry, which is represented in chart 1.
-
-INSERT: (chart 1: Data cleaning: Remove unwanted data which means with missing info, left with 297 patients, then reorganize variables : categorical> cts var > num), save as database in SQL version (...)
-
+Using the computerized database from [1], database was inspected, cleaned by removing patients with incomplete information , convert categorical data into integers and change the feature for investigation from "num" to "class", sorted variables in order of categorical, continuous variables and binary heart disease class, and saved as an SQL based data registry. Data was inspected, sorted and cleaned using SQL version 5.7.44 (https://dev.mysql.com/downloads/installer/). 
 
 **Patient Population**
 
@@ -72,7 +69,7 @@ While inspecting and cleaning the computerized database, 6 patients with incompl
 
 Table 1: Baseline characteristics of the patients diagnosed with and without heart disease used for heart disease prediction in this work
 
-**Statistical & Data Analysis**
+**Statistical & Data Analysis** (wait)
 
 As shown in baseline characteristics (Table 1), continuous variables are presented as means and standard deviations, whereas categorical variables are presented as percentages.
 
@@ -91,26 +88,41 @@ Based on previous experience and available literature, the following machine lea
 
 All models were recomputed after hyper-parameter fine-tuning of all classification algorithms.
 
+Before model setup, data was prepared in the following workflow for model training and validation putpose.
+
+Class convertion > Categorical  
+                                                                 > concarcinate > Split into train-test set 4:1 
+                 > Continuous   > Data Normalization (z-score)  
+
+
+
 The models were set up and implemented on R and Python as follows
 
-**(1) Model Setup**
+**(1)Backward Propagation Neural Network (BPNN) Model Development**
 
-3) Data Normalization:
-- Data were all normalised to z-score.
-- Train and test data were divided with the proportion of 4:1.
+The BPNN models were built and implemented using PyTorch version 2.7 (https://pytorch.org/blog/pytorch-2-7/). Three network architectures were investigated, consisting of 1, 3, and 6 hidden layers (n), respectively. Figure 2 illustrates the network architecture used in this work.
 
-4) Model Training
-- Find the optimal threshold for prediction model prediction from the highest Youden’s J score:
-  
-  a) over 10-fold cross-validation in the train data on the SVM, BLR, LR, XGB and KNN models from packages for R,
-  
-  b) over 1000 epochs for the 3 NN models developed with PyTorch.
+(Figure 2)
 
-5) Model Evaluation from test results 
-Prediction models’ performances were all assessed by area under the ROC (Receiver Operating Characteristic) curve (AUC-ROC), sensitivity, specificity, F1 Score, Youden’s J Statistics, prediction bias, precision, and accuracy.
+Model parameters were optimized using the Adam optimizer with a learning rate of 0.001. Binary Cross-Entropy Loss (BCELoss) was used as the objective function because the prediction task involved a binary outcome. In each BPNN, model training was performed for 1000 epochs using mini-batch gradient descent with a batch size of 10. In each epoch, a series of actions as described in chart 2 was done to compute Youden's J statistics. The epoch yielding the maximum Youden’s J statistic was considered the best-performing model configuration.
 
-**Validation**
+Chart 2: 
 
+| 1. The model generated probability predictions on the training set. |
+| 2. Classification thresholds ranging from 0.1 to 0.9 (increment = 0.1) were evaluated. |
+| 3. For each threshold, sensitivity and specificity were calculated. |
+| 4. The Youden’s J statistic was computed: |
+|                                            |
+| J = Sensitivity + Specificity - 1 |
+|                                   |
+| 5. The threshold producing the highest Youden’s J value was selected as the optimal classification threshold for that epoch. |
+| 6. Training loss, classification accuracy, sensitivity, specificity, and Youden’s J statistic were recorded. |
+
+
+
+
+**(3) Model Evaluation from Validation**
+Input set of validation set is employed to the trained model, and then compared with the actual output set of the corresponding input. Prediction models’ performances were all assessed by area under the ROC (Receiver Operating Characteristic) curve (AUC-ROC), sensitivity, specificity, F1 Score, Youden’s J Statistics, prediction bias, precision, and accuracy on R version 4.3.1 (2023-06-16 ucrt)(https://cran.r-project.org/bin/windows/base/old/4.3.1/)with appropriate libraries (eg. for statistical analyses, for data analysis) and Python version 3.11.9 (https://www.python.org/downloads/release/python-3119/) on Visual Studio Code version 1.103.1,1.103.2, 1.104.1,1.104.2  with appropriate libraries (i.e. ).
 
 # 📈Results: 
 Among 297 patients, the mean age was 54.54+/-9.05 years, of whom 160 are control while 137 are diagnosed. 5 most key features (ca, thal, oldpeak, thalach, cp) from a total of 13 variables were chosen to train the models. XGB(AUC=0.888) outperformed BLR (AUC=0.882), BPNN6 (AUC=0.866), SVM (AUC=0.853) and KNN (AUC=0.853), BPNN3 (AUC=0.833), LR (AUC=0.84) and BPNN1 (AUC=0.817). The XGB model showed the highest accuracy (89.83%) with highest Youden’s J Statistics (0.7762), the SVM model was the most sensitive one (95.83%), LR and BLR showed the highest specificity (0.9714), and BLR showed the highest precision (95%). XGB model performed the best in overall due to its high AUC-ROC, accuracy, Youden’s J Statistics (0.7762), F1-Score (0.8696), reasonably high specificity (83.33%) and low prediction bias (0.0339) which showed best reliability in prediction, best detection of disease while performing reasonably well in predicting control. 
