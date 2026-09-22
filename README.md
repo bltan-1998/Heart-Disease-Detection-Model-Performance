@@ -50,8 +50,8 @@ The data was collected from the Heart Disease database [1]
 
 **Patient Population**
 
-<img width="419" height="480" alt="image" src="https://github.com/user-attachments/assets/ef252cf9-854d-42ee-a49d-a4507a050538" />
-<img width="419" height="475" alt="image" src="https://github.com/user-attachments/assets/a1a35d4b-d1a9-432c-9610-877f11c25aa7" />
+<img width="609" height="945" alt="6165712586532393285" src="https://github.com/user-attachments/assets/a6f019b0-027d-4a2d-905f-60ca3b7fce2c" />
+<img width="610" height="958" alt="6165712586532393286" src="https://github.com/user-attachments/assets/67364cbc-c88a-46d4-8e8a-bd94df79fed9" />
 
 Table 1: Baseline characteristics of the patients diagnosed with and without heart disease
 
