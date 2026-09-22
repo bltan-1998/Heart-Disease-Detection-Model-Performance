@@ -102,7 +102,10 @@ The models were set up and implemented on R and Python as follows
 
 The BPNN models were built and implemented using PyTorch version 2.7 (https://pytorch.org/blog/pytorch-2-7/). Three network architectures were investigated, consisting of 1, 3, and 6 hidden layers (n), respectively. Figure 2 illustrates the network architecture used in this work.
 
-(Figure 2)
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/99133259-d544-4617-8d1c-05558b5c581a" />
+
+Figure 2: BPNN Architecture 
+
 
 Model parameters were optimized using the Adam optimizer with a learning rate of 0.001. Binary Cross-Entropy Loss (BCELoss) was used as the objective function because the prediction task involved a binary outcome. In each BPNN, model training was performed for 1000 epochs using mini-batch gradient descent with a batch size of 10. In each epoch, a series of actions as described in chart 2 was done to compute Youden's J statistics. The epoch yielding the maximum Youden’s J statistic was considered the best-performing model configuration.
 
@@ -114,6 +117,42 @@ Chart 2:
 | J = Sensitivity + Specificity - 1 |
 | 5. The threshold producing the highest Youden’s J value was selected as the optimal classification threshold for that epoch. |
 | 6. Training loss, classification accuracy, sensitivity, specificity, and Youden’s J statistic were recorded. |
+
+┌──────────────────────────────────────────────┐
+│ Step 1                                       │
+│ Generate probability predictions             │
+│ on the training set                          │
+└──────────────────────────────────────────────┘
+                       ↓
+┌──────────────────────────────────────────────┐
+│ Step 2                                       │
+│ Evaluate thresholds from 0.1 to 0.9         │
+│ (increment = 0.1)                            │
+└──────────────────────────────────────────────┘
+                       ↓
+┌──────────────────────────────────────────────┐
+│ Step 3                                       │
+│ Calculate Sensitivity and Specificity        │
+│ for each threshold                           │
+└──────────────────────────────────────────────┘
+                       ↓
+┌──────────────────────────────────────────────┐
+│ Step 4                                       │
+│ Calculate Youden's J                         │
+│ J = Sensitivity + Specificity - 1            │
+└──────────────────────────────────────────────┘
+                       ↓
+┌──────────────────────────────────────────────┐
+│ Step 5                                       │
+│ Select threshold with the highest            │
+│ Youden's J as optimal threshold              │
+└──────────────────────────────────────────────┘
+                       ↓
+┌──────────────────────────────────────────────┐
+│ Step 6                                       │
+│ Record Loss, Accuracy, Sensitivity,          │
+│ Specificity, and Youden's J                  │
+└──────────────────────────────────────────────┘
 
 **(3) Model Evaluation from Validation**
 Input set of validation set is employed to the trained model, and then compared with the actual output set of the corresponding input. Prediction models’ performances were all assessed by area under the ROC (Receiver Operating Characteristic) curve (AUC-ROC), sensitivity, specificity, F1 Score, Youden’s J Statistics, prediction bias, precision, and accuracy on R version 4.3.1 (2023-06-16 ucrt)(https://cran.r-project.org/bin/windows/base/old/4.3.1/)with appropriate libraries (eg. for statistical analyses, for data analysis) and Python version 3.11.9 (https://www.python.org/downloads/release/python-3119/) on Visual Studio Code version 1.103.1,1.103.2, 1.104.1,1.104.2  with appropriate libraries (i.e. ).
