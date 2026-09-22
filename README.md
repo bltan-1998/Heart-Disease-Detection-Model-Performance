@@ -109,15 +109,6 @@ Figure 2: BPNN Architecture
 
 Model parameters were optimized using the Adam optimizer with a learning rate of 0.001. Binary Cross-Entropy Loss (BCELoss) was used as the objective function because the prediction task involved a binary outcome. In each BPNN, model training was performed for 1000 epochs using mini-batch gradient descent with a batch size of 10. In each epoch, a series of actions as described in chart 2 was done to compute Youden's J statistics. The epoch yielding the maximum Youden’s J statistic was considered the best-performing model configuration.
 
-Chart 2: 
-| 1. The model generated probability predictions on the training set. |
-| 2. Classification thresholds ranging from 0.1 to 0.9 (increment = 0.1) were evaluated. |
-| 3. For each threshold, sensitivity and specificity were calculated. |
-| 4. The Youden’s J statistic was computed: |
-| J = Sensitivity + Specificity - 1 |
-| 5. The threshold producing the highest Youden’s J value was selected as the optimal classification threshold for that epoch. |
-| 6. Training loss, classification accuracy, sensitivity, specificity, and Youden’s J statistic were recorded. |
-
 ### Chart 2. Classification Threshold Selection
 
 ```mermaid
