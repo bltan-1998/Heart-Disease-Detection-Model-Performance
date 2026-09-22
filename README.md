@@ -48,15 +48,17 @@
 
 **Data Collection & Data Registry Creation** 
 
-Based on [1], the data collection protocol included routine clinical assessment and three noninvasive cardiovascular investigations. Clinical information comprised medical history, physical examination, resting electrocardiography, serum cholesterol, and fasting blood glucose measurements. Following informed consent, patients underwent exercise electrocardiography, exercise thallium scintigraphy, and cardiac fluoroscopy to assess coronary calcium.
+Based on [4], the data collection protocol included routine clinical assessment and three noninvasive cardiovascular investigations. Clinical information comprised medical history, physical examination, resting electrocardiography, serum cholesterol, and fasting blood glucose measurements. Following informed consent, patients underwent exercise electrocardiography, exercise thallium scintigraphy, and cardiac fluoroscopy to assess coronary calcium.
 
-For model development, 13 clinical and test variables were considered. These comprised four clinical variables: age, sex, chest pain type, and systolic blood pressure. Additional routine clinical and laboratory variables included serum cholesterol, fasting blood glucose >120 mg/dL, and resting ECG findings. Exercise and noninvasive test variables included maximum heart rate, exercise-induced angina, ST-segment slope, ST-segment depression, exercise thallium scintigraphy findings, and the number of major coronary vessels showing calcium on fluoroscopy.
+13 clinical and test variables were considered, which comprised four clinical variables: age, sex, chest pain type, and systolic blood pressure. Additional routine clinical and laboratory variables included serum cholesterol, fasting blood glucose >120 mg/dL, and resting ECG findings. Exercise and noninvasive test variables included maximum heart rate, exercise-induced angina, ST-segment slope, ST-segment depression, exercise thallium scintigraphy findings, and the number of major coronary vessels showing calcium on fluoroscopy.
 
-To minimize potential work-up bias, information from different stages of the assessment was collected and interpreted independently [1]. Historical information was recorded without knowledge of the noninvasive test or angiographic results, while the noninvasive tests were analyzed without knowledge of the patient's history or angiographic findings [1]. Coronary angiograms were interpreted by a cardiologist who was blinded to the other test results [1].
+To minimize potential work-up bias, information from different stages of the assessment was collected and interpreted independently [4]. Historical information was recorded without knowledge of the noninvasive test or angiographic results, while the noninvasive tests were analyzed without knowledge of the patient's history or angiographic findings [4]. Coronary angiograms were interpreted by a cardiologist who was blinded to the other test results [4].
 
-The collected variables were subsequently entered into a computerized database, which was then cleaned. Coronary artery disease status was determined from coronary angiography, with an angiogram classified as abnormal when there was greater than 50% diameter narrowing of a major coronary vessel. This angiographic disease status was used as the dependent outcome variable for development of the prediction model in this work.
+The collected variables were subsequently entered into a computerized database [4]. Coronary artery disease status was determined from coronary angiography, with an angiogram classified as abnormal when there was greater than 50% diameter narrowing of a major coronary vessel [4]. This angiographic disease status, represented as "num", was used as the dependent outcome variable for development of the prediction model in this work [4].
 
-sorted and saved as an SQL based data registry
+Using the computerized database from [1], database was cleaned, sorted and saved as an SQL based data registry, which is represented in chart 1.
+
+(chart 1: Data cleaning: Remove unwanted data which means with missing info, left with 297 patients, then reorganize variables : categorical> cts var > num), save as database in SQL version (...)
 
 
 **Patient Population**
