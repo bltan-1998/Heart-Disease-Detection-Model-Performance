@@ -71,7 +71,7 @@ Table 1: Baseline characteristics of the patients diagnosed with and without hea
 
 **Statistical & Data Analysis** 
 
-Baseline characteristics (Table 1) are summarized with means and standard deviations for continuous variables and percentages for categorical variables. Group comparisons used the Wilcoxon rank-sum test for continuous variables, and either Pearson's Chi-squared test or Fisher's exact test for categorical variables, depending on which was appropriate.
+Baseline characteristics (Table 1) are summarized with means and standard deviations for continuous variables, frequency percentages for categorical variables. Group comparisons used the Wilcoxon rank-sum test for continuous variables, and either Pearson's Chi-squared test or Fisher's exact test for categorical variables, depending on which was appropriate.
 
 Data analysis was performed by following these steps:
 
