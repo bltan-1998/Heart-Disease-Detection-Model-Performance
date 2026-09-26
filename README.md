@@ -99,7 +99,8 @@ Based on previous experience and available literature, the following machine lea
 
 The architecture and set up of the models are described as below 
 
-**(1)Backward Propagation Neural Network (BPNN) Model Development**<\bhr>
+**(1)Backward Propagation Neural Network (BPNN) Model Development**
+
 The BPNN models were built and implemented using PyTorch version 2.7 (https://pytorch.org/blog/pytorch-2-7/). Three network architectures were investigated, consisting of 1, 3, and 6 hidden layers (n), respectively. Figure 2 illustrates the network architecture used in this work.
 
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/99133259-d544-4617-8d1c-05558b5c581a" />
@@ -109,12 +110,15 @@ Figure 2: BPNN Architecture
 Model parameters were optimized using the Adam optimizer with a learning rate of 0.001. Binary Cross-Entropy Loss (BCELoss) was used as the objective function due to the involvement of a binary outcome in a prediction task. 
 
 **(2) Logistic Regression**
+
 A logistic regression model was developed using a generalized linear model (GLM) with a binomial distribution and logistic regression (logit) function with package stars in R.
 
 **(3) Bayesian Logistic Regression**
+
 A Bayesian logistic regression model was implemented using the Stan framework through the rstanarm package in R. 
 
-* Prior Specification<\bhr>
+* Prior Specification
+
 Prior distributions were derived from the coefficients and standard errors obtained from the conventional logistic regression model.
 
 For each coefficient:
@@ -126,17 +130,20 @@ For each coefficient:
 where $\hat{\beta}_i$ and $SE(\hat{\beta}_i)$ denote the estimated regression coefficient and its standard error, respectively.
 
 **(4) K-Nearest Neighbours**
+
 A K-Nearest Neighbours classifier was developed in R using the caret package. 
 
 Model training employed 10-fold cross-validation with probability estimation enabled.
 The optimal number of neighbours (k) was automatically selected through hyperparameter tuning with a search range of up to 10 candidate values.
 
 **(5) Support Vector Machine**
+
 A Support Vector Machine classifier with a Radial Basis Function (RBF) kernel was implemented in R using the caret package.
 
 Model tuning was performed using 10-fold cross-validation, and candidate hyperparameter combinations were automatically explored through caret’s tuning procedure.
 
 **(6) Extreme Gradient Boosting (XGB)**
+
 An Extreme Gradient Boosting (XGBoost) classifier was implemented in R using the xgbTree algorithm within the caret framework.
 
 Hyperparameter tuning was performed using 10-fold cross-validation with three candidate tuning configurations evaluated automatically by caret.
