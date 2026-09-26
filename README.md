@@ -148,7 +148,7 @@ An Extreme Gradient Boosting (XGBoost) classifier was implemented in R using the
 
 Hyperparameter tuning was performed using 10-fold cross-validation with three candidate tuning configurations evaluated automatically by caret.
 
-Following data preprocessing and model specification, the models were trained using the designated training dataset, while an independent testing dataset was retained for final evaluation. For models requiring model selection or hyperparameter tuning, 10-fold cross-validation was performed within the training dataset. The training data were divided into ten folds, with each fold iteratively used as the validation subset while the remaining folds were used for model training.
+Data processing was done by normalizing continuous data and split the dataset into 2 seperated train-validate set with ratio of 4:1. Following data preprocessing and model specification,  models were trained using the designated training dataset, while an independent testing dataset was retained for final evaluation. 10-fold cross-validation was performed within the training dataset. The training data were divided into ten folds, with each fold iteratively used as the validation subset while the remaining folds were used for model training.
 
 
 **Model Evaluation from Validation**
