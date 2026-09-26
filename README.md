@@ -71,14 +71,14 @@ Table 1: Baseline characteristics of the patients diagnosed with and without hea
 
 **Statistical & Data Analysis** 
 
-Baseline characteristics (Table 1) are summarized with means and standard deviations for continuous variables, frequency percentages for categorical variables. Group comparisons used the Wilcoxon rank-sum test for continuous variables, and either Pearson's Chi-squared test or Fisher's exact test for categorical variables, depending on which was appropriate.
+Baseline characteristics (Table 1) are summarized with means and standard deviations for continuous variables, frequency and percentages for categorical variables. Group comparisons used the Wilcoxon rank-sum test for continuous variables, and either Pearson's Chi-squared test or Fisher's exact test for categorical variables, depending on which was appropriate.
 
 Data analysis was performed by following these steps:
 
 1. Data were inspected and sorted.
 2. Data were cleaned by excluding patients with missing values for any variable.
 3. Certain binary variables coded with multiple values were recoded as 1 and 0.
-4. The heart disease classification was collapsed from a five-level scale (0 = healthy, 1–4 = increasing severity) into a
+4. The heart disease classification was collapsed from a four-level scale (0 = healthy, 1–3 = increasing severity) into a
    binary outcome (0 = healthy, 1 = diagnosed with heart disease).
 6. The cleaned dataset was compiled into an SQL-based data registry.
 7. Correlation matrices and diagnostic density plots of the original, non-missing data were generated, and the Shapiro-Wilk
