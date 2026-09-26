@@ -114,14 +114,14 @@ A logistic regression model was developed using a generalized linear model (GLM)
 **(3) Bayesian Logistic Regression**
 A Bayesian logistic regression model was implemented using the Stan framework through the rstanarm package in R. 
 
-* Prior Specification
+* Prior Specification<\bhr>
 Prior distributions were derived from the coefficients and standard errors obtained from the conventional logistic regression model.
 
 For each coefficient:
 
-$$
+、、、
 \beta_i \sim \mathrm{Normal}\left(\hat{\beta}_i,\; SE(\hat{\beta}_i)\right)
-$$
+、、、
 
 where $\hat{\beta}_i$ and $SE(\hat{\beta}_i)$ denote the estimated regression coefficient and its standard error, respectively.
 
@@ -144,9 +144,7 @@ Hyperparameter tuning was performed using 10-fold cross-validation with three ca
 Following data preprocessing and model specification, the models were trained using the designated training dataset, while an independent testing dataset was retained for final evaluation. For models requiring model selection or hyperparameter tuning, 10-fold cross-validation was performed within the training dataset. The training data were divided into ten folds, with each fold iteratively used as the validation subset while the remaining folds were used for model training.
 
 
-
-
-**(3) Model Evaluation from Validation**
+**Model Evaluation from Validation**
 Input set of validation set is employed to the trained model, and then compared with the actual output set of the corresponding input. Prediction models’ performances were all assessed by area under the ROC (Receiver Operating Characteristic) curve (AUC-ROC), sensitivity, specificity, F1 Score, Youden’s J Statistics, prediction bias, precision, and accuracy on R version 4.3.1 (2023-06-16 ucrt)(https://cran.r-project.org/bin/windows/base/old/4.3.1/)with appropriate libraries (eg. for statistical analyses, for data analysis) and Python version 3.11.9 (https://www.python.org/downloads/release/python-3119/) on Visual Studio Code version 1.103.1,1.103.2, 1.104.1,1.104.2  with appropriate libraries (i.e. ).
 
 # 📈Results: 
