@@ -162,10 +162,31 @@ Among 297 patients, the mean age was 54.54+/-9.05 years, of whom 160 are control
 <img width="1098" height="462" alt="image" src="https://github.com/user-attachments/assets/78223592-9ae0-441b-b85a-6090f6c6dc03" />
 
 # 🛠️Discussions
-**Limitations** (The following should be amended to be stated as not known if it is enough instead of saying insufficient because we do not have enough proof to show its sufficiency. Therefore we can say that we will move on to check if they are sufficient. Besides, limitations should also include what we find problematic. There might have something which happens against our expectations, if we do not know any, we can also state something we have not really discovered. But one thing for sure is that we can check the model performance, and tell what might be the problems, or if some figures seem bad, then we can propose what are they, of course we should mention that our predictors choice is not so appropriate with correlation matrix as it imples correlation without telling us importance, where we need further classification using weightage approaches which then can tell us which are more important, inclusing bayesian statistics to provide some information of causal relationship.)
-- Limited size of sample in this database to further train, validate and test the machine learning models
-- Limited number of variables available as predictors
-- Limited information on relationship between predictors and their link to the presence of heart disease
+
+**Summary of findings**
+
+Among the eight models, XGB performed best overall (AUC = 0.888, accuracy = 89.83%, Youden's J = 0.7762, F1 = 0.8696, prediction bias = 0.0339). However, AUC values across models ranged only from 0.817 to 0.888, and with a validation set of roughly 60 patients, significance differences between model performances such as XGB (0.888) versus BLR (0.882) are yet to be verified. 
+
+**Interpretation**
+(XGB>BLR>BPNN6>KNN,SVM>LR>BPNN3>BPNN1)
+The following explanations are hypotheses that this study was not designed to test. XGB may have led because tree-based boosting can capture non-linear effects and interactions among predictors such as ca, thal, oldpeak, thalach and cp, which linear models cannot. The BPNNs may have been limited by the small sample (n = 297), as neural networks generally need more data to train stably. The non-monotonic ordering across depths (AUC: BPNN6 0.866 > BPNN3 0.833 > BPNN1 0.817 is monotonic in AUC, but BPNN3's sensitivity-specificity gap is not) suggests that variation from training instability or the small validation set may matter more than architecture. [Check this sentence against your tables and adjust.]
+
+The models also differed in error profile. SVM had the highest sensitivity (95.83%), whereas LR and BLR had the highest specificity (0.9714), and BLR the highest precision (95%). In a screening context, missing a diseased patient is usually costlier than a false alarm, so a high-sensitivity model such as SVM may be preferable despite XGB's better overall balance. Conversely, a high-specificity model may suit confirmatory settings where unnecessary invasive follow-up should be avoided. The best model therefore depends on the clinical use case.
+
+LR, SVM and BPNN3 showed prediction bias above 0.1, suggesting systematic over- or under-prediction of one class. The cause is unknown; class imbalance, the small validation set, or the lack of probability calibration are possibilities to investigate.
+
+**Challenges & Limitations**
+Limitations 
+*•	Sample size: *
+The dataset has 297 complete cases and the validation set is small, so it is unknown whether this sample size is sufficient or these rankings would hold in larger samples. Therefore, sample size determination test is needed to ensure sufficiency of sample size for this dataset for reliable outcome classification [6]. One way is to perform a posteriori sample size calculation with a learning curve approach [5,6] to determine if this sample size is sufficiently large for model derivation.
+
+	•	Predictor selection: Predictors were chosen by correlation with the outcome. Correlation reflects association between variables, which is not powerful enough to show importance or causal influence between variables, and it is unknown whether the chosen five are optimal. As a results, feature selection approaches for machine learning based disease risk prediction should be employed before proceeding model classification to carefully determine and evaluate their importance in the prediction[7]. Besides, causal relationship test can be useful to trace the significance of causal link between variables through Bayesian statistical analysis, where 
+
+Challanges 
+	•	Limited predictors and data source: Only 13 variables were available, from a single centre (Cleveland Clinic, 1981-1984). Generalisability to contemporary or other populations is unknown.  
+
+**Future Work and Clinical Implications**
+We plan to address the limitations as mentioned in discussion for model classification in future work.  Further steps include sample size calibration analysis, confidence intervals for all metrics, and exploration with medical institutions for larger datasets with more biomarkers and omics data if needed and accessible. These models are intended to support, not replace, clinical decision-making.
 
   
 **Future Work**
