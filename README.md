@@ -167,7 +167,7 @@ Among 297 patients, the mean age was 54.54+/-9.05 years, of whom 160 are control
 
 Among the eight models, XGB performed best overall (AUC = 0.888, accuracy = 89.83%, Youden's J = 0.7762, F1 = 0.8696, prediction bias = 0.0339). However, AUC values across models ranged only from 0.817 to 0.888, and with a validation set of roughly 60 patients, significance differences between model performances such as XGB (0.888) versus BLR (0.882) are yet to be verified. 
 
-**Interpretation**
+**Interpretation (not ok)**
 (XGB>BLR>BPNN6>KNN,SVM>LR>BPNN3>BPNN1)
 The following explanations are hypotheses that this study was not designed to test. XGB may have led because tree-based boosting can capture non-linear effects and interactions among predictors such as ca, thal, oldpeak, thalach and cp, which linear models cannot. The BPNNs may have been limited by the small sample (n = 297), as neural networks generally need more data to train stably. The non-monotonic ordering across depths (AUC: BPNN6 0.866 > BPNN3 0.833 > BPNN1 0.817 is monotonic in AUC, but BPNN3's sensitivity-specificity gap is not) suggests that variation from training instability or the small validation set may matter more than architecture. [Check this sentence against your tables and adjust.]
 
@@ -176,22 +176,22 @@ The models also differed in error profile. SVM had the highest sensitivity (95.8
 LR, SVM and BPNN3 showed prediction bias above 0.1, suggesting systematic over- or under-prediction of one class. The cause is unknown; class imbalance, the small validation set, or the lack of probability calibration are possibilities to investigate.
 
 **Challenges & Limitations**
-Limitations 
-*•	Sample size: *
+**Limitations** 
+•	Sample size: 
+
 The dataset has 297 complete cases and the validation set is small, so it is unknown whether this sample size is sufficient or these rankings would hold in larger samples. Therefore, sample size determination test is needed to ensure sufficiency of sample size for this dataset for reliable outcome classification [6]. One way is to perform a posteriori sample size calculation with a learning curve approach [5,6] to determine if this sample size is sufficiently large for model derivation.
 
-	•	Predictor selection: Predictors were chosen by correlation with the outcome. Correlation reflects association between variables, which is not powerful enough to show importance or causal influence between variables, and it is unknown whether the chosen five are optimal. As a results, feature selection approaches for machine learning based disease risk prediction should be employed before proceeding model classification to carefully determine and evaluate their importance in the prediction[7]. Besides, causal relationship test can be useful to trace the significance of causal link between variables through Bayesian statistical analysis, where 
+•	Predictor selection: (not ok)
 
-Challanges 
-	•	Limited predictors and data source: Only 13 variables were available, from a single centre (Cleveland Clinic, 1981-1984). Generalisability to contemporary or other populations is unknown.  
+Predictors were chosen by correlation with the outcome. Correlation reflects association between variables, which is not powerful enough to show importance or causal influence between variables, and it is unknown whether the chosen five are optimal. As a results, feature selection approaches for machine learning based disease risk prediction should be employed before proceeding model classification to carefully determine and evaluate their importance in the prediction[7]. Besides, causal relationship test can be useful to trace the significance of causal link between variables through Bayesian statistical analysis, where 
+
+**Challanges** 
+•	Limited predictors and data source:
+
+Only 13 variables were available, from a single centre (Cleveland Clinic, 1981-1984). Generalisability to contemporary or other populations is unknown.  
 
 **Future Work and Clinical Implications**
 We plan to address the limitations as mentioned in discussion for model classification in future work.  Further steps include sample size calibration analysis, confidence intervals for all metrics, and exploration with medical institutions for larger datasets with more biomarkers and omics data if needed and accessible. These models are intended to support, not replace, clinical decision-making.
-
-  
-**Future Work**
-
-To address the above limitations, Bayesian network with causal relationship information between the predictors themselves and the predictors and heart disease will be crafted from the utility of Bayesian statistics and probability theory. Besides, further collaboration with medical institutions is necessary for larger size of database with more biomarkers and omics available.
 
 # 📮Conclusion: 
 This study highlights the potential of machine learning models to support clinicians in CVD diagnosis using routinely available patient data.  All eight models achieved strong discriminative performance (AUC > 0.80), confirming their capability in identifying positive and negative class, however some models (LR, SVM, BPNN3) tend to make slightly unrealistic predictions due to their prediction bias > 0.1. Among them, XGB consistently outperformed, offering robust predictive reliability without much bias toward either class. Conversely, BPNN3 showed reduced sensitivity and a marked specificity-sensitivity value gap, limiting its diagnostic reliability relative to other models. These findings suggest that ensemble-based approaches such as XGB may provide the most effective framework for developing decision-support systems in CVD diagnosis. However, limited data size may lead to overfitting, thus, model performance needs to be further evaluated with larger datasets.
@@ -204,5 +204,9 @@ https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset
 2) Souza, Cezar & Barreto, Cephas & Macedo, Lhayana & Oliveira de Brito, Bruna Alice & Targino, Victor & Betcel, Emanuel & Gomes de Almeida, Fernando & Rodrigues, Arthur & Malaquias, Ramon & Barroca Filho, Itamir. (2023). A systematic literature review on Machine Learning Model evaluation on healthcare applications. Research Society and Development. 12. e5412642042. 10.33448/rsd-v12i6.42042.
 3) Aggarwal, Charu. (2018). Neural Networks and Deep Learning: A Textbook. 10.1007/978-3-319-94463-0.
 4) Detrano R, Janosi A, Steinbrunn W, Pfisterer M, Schmid JJ, Sandhu S, Guppy KH, Lee S, Froelicher V. International application of a new probability algorithm for the diagnosis of coronary artery disease. Am J Cardiol. 1989 Aug 1;64(5):304-10. doi: 10.1016/0002-9149(89)90524-9. PMID: 2756873.
+5)Böhm A, Segev A, Jajcay N, Krychtiuk KA, Tavazzi G, Spartalis M, Kollarova M, Berta I, Jankova J, Guerra F, Pogran E, Remak A, Jarakovic M, Sebenova Jerigova V, Petrikova K, Matetzky S, Skurk C, Huber K, Bezak B. Machine learning-based scoring system to predict cardiogenic shock in acute coronary syndrome. Eur Heart J Digit Health. 2025 Jan 6;6(2):240-251. doi: 10.1093/ehjdh/ztaf002. PMID: 40110217; PMCID: PMC11914733.
+6) van Smeden M, Heinze G, Van Calster B, Asselbergs FW, Vardas PE, Bruining N, de Jaegere P, Moore JH, Denaxas S, Boulesteix AL, Moons KGM. Critical appraisal of artificial intelligence-based prediction models for cardiovascular disease. Eur Heart J. 2022 Aug 14;43(31):2921-2930. doi: 10.1093/eurheartj/ehac238. PMID: 35639667; PMCID: PMC9443991.
+7) Pudjihartono N, Fadason T, Kempa-Liehr AW, O'Sullivan JM. A Review of Feature Selection Methods for Machine Learning-Based Disease Risk Prediction. Front Bioinform. 2022 Jun 27;2:927312. doi: 10.3389/fbinf.2022.927312. PMID: 36304293; PMCID: PMC9580915.
+8) Yang, K., Liu, L. & Wen, Y. The impact of Bayesian optimization on feature selection. Sci Rep 14, 3948 (2024). https://doi.org/10.1038/s41598-024-54515-w.
 
 
