@@ -129,7 +129,7 @@ Prior distributions were derived from the coefficients and standard errors obtai
 For each coefficient:
 
 $$
-\beta_i \sim \mathrm{Normal}\left(\hat{\beta}_i,\; SE(\hat{\beta}_i)\right)
+\beta_i \sim \mathrm{Normal}\left(\hat{\beta}_i\; SE(\hat{\beta}_i)\right)
 $$
 
 where $\hat{\beta}_i$ and $SE(\hat{\beta}_i)$ denote the estimated regression coefficient and its standard error, respectively.
