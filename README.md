@@ -134,7 +134,6 @@ $$
 
 where $\hat{\beta}_i$ and $SE(\hat{\beta}_i)$ denote the estimated regression coefficient and its standard error, respectively.
 
-
 **(4) K-Nearest Neighbours**
 
 A K-Nearest Neighbours classifier was developed in R using the caret package. 
