@@ -3,14 +3,9 @@
 >
 >As precision medicine technology improves with development of AI, machine learning and deep learning algorithms have been extensively developed to help identifying and classifying patient outcomes under clinical settings. This project was started with the purpose to investigate model performance of different machine learning models from different packages in classifying heart disease from the database (https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset).
 >
->**Methods & Results**
->
->**Conclusion**
 
 **Author:** Tan Bee Ling
 
-# 📌Abstract
-(Add in)
 
 **Key Findings:**
 
@@ -69,6 +64,16 @@ While inspecting and cleaning the computerized database, 6 patients with incompl
 
 Table 1: Baseline characteristics of the patients diagnosed with and without heart disease used for heart disease prediction in this work
 
+| Variables | Shapiro Wilk Normality Test Results   |
+|:----------|:--------------------------------------|
+| age       | 0.005424                              |
+| trestbps  | 2.416e-06                             |
+| chol      | 1.019e-08                             |
+| thalach   | 9.044e-05                             |
+| oldpeak   | < 2.2e-16                             |
+
+Chart 1: Shapiro wilk normality test results
+
 **Statistical & Data Analysis** 
 
 Baseline characteristics (Table 1) are summarized with means and standard deviations for continuous variables, frequency and percentages for categorical variables. Group comparisons used the Wilcoxon rank-sum test for continuous variables, and either Pearson's Chi-squared test or Fisher's exact test for categorical variables, depending on which was appropriate.
@@ -121,6 +126,12 @@ A Bayesian logistic regression model was implemented using the Stan framework th
 
 Prior distributions were derived from the coefficients and standard errors obtained from the conventional logistic regression model.
 
+$$
+\beta_i \sim \mathrm{Normal}\left(\hat{\beta}_i,\; SE(\hat{\beta}_i)\right)
+$$
+
+where $\hat{\beta}_i$ and $SE(\hat{\beta}_i)$ denote the estimated regression coefficient and its standard error, respectively.
+
 For each coefficient:
 
 、、、
@@ -149,7 +160,6 @@ An Extreme Gradient Boosting (XGBoost) classifier was implemented in R using the
 Hyperparameter tuning was performed using 10-fold cross-validation with three candidate tuning configurations evaluated automatically by caret.
 
 Data processing was done by normalizing continuous data and split the dataset into 2 seperated train-validate set with ratio of 4:1. Following data preprocessing and model specification,  models were trained using the designated training dataset, while an independent testing dataset was retained for final evaluation. 10-fold cross-validation was performed within the training dataset. The training data were divided into ten folds, with each fold iteratively used as the validation subset while the remaining folds were used for model training.
-
 
 **Model Evaluation from Validation**
 
