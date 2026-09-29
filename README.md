@@ -126,19 +126,14 @@ A Bayesian logistic regression model was implemented using the Stan framework th
 
 Prior distributions were derived from the coefficients and standard errors obtained from the conventional logistic regression model.
 
-$$
-\beta_i \sim \mathrm{Normal}\left(\hat{\beta}_i,\; SE(\hat{\beta}_i)\right)
-$$
-
-where $\hat{\beta}_i$ and $SE(\hat{\beta}_i)$ denote the estimated regression coefficient and its standard error, respectively.
-
 For each coefficient:
 
-、、、
+$$
 \beta_i \sim \mathrm{Normal}\left(\hat{\beta}_i,\; SE(\hat{\beta}_i)\right)
-、、、
+$$
 
 where $\hat{\beta}_i$ and $SE(\hat{\beta}_i)$ denote the estimated regression coefficient and its standard error, respectively.
+
 
 **(4) K-Nearest Neighbours**
 
